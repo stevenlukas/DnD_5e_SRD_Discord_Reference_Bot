@@ -1,0 +1,58 @@
+C:\Users\steve\OneDrive\Documents\GitHub\Personal-Projects\Bots\DnD Discord Bot\bin\Debug\netcoreapp3.0\DnD Discord Bot.exe
+C:\Users\steve\OneDrive\Documents\GitHub\Personal-Projects\Bots\DnD Discord Bot\obj\Debug\netcoreapp3.0\DnD Discord Bot.csprojAssemblyReference.cache
+C:\Users\steve\OneDrive\Documents\GitHub\Personal-Projects\Bots\DnD Discord Bot\obj\Debug\netcoreapp3.0\DnD Discord Bot.AssemblyInfoInputs.cache
+C:\Users\steve\OneDrive\Documents\GitHub\Personal-Projects\Bots\DnD Discord Bot\obj\Debug\netcoreapp3.0\DnD Discord Bot.AssemblyInfo.cs
+C:\Users\steve\OneDrive\Documents\GitHub\Personal-Projects\Bots\DnD Discord Bot\bin\Debug\netcoreapp3.0\DnD Discord Bot.deps.json
+C:\Users\steve\OneDrive\Documents\GitHub\Personal-Projects\Bots\DnD Discord Bot\bin\Debug\netcoreapp3.0\DnD Discord Bot.runtimeconfig.json
+C:\Users\steve\OneDrive\Documents\GitHub\Personal-Projects\Bots\DnD Discord Bot\bin\Debug\netcoreapp3.0\DnD Discord Bot.runtimeconfig.dev.json
+C:\Users\steve\OneDrive\Documents\GitHub\Personal-Projects\Bots\DnD Discord Bot\bin\Debug\netcoreapp3.0\DnD Discord Bot.dll
+C:\Users\steve\OneDrive\Documents\GitHub\Personal-Projects\Bots\DnD Discord Bot\bin\Debug\netcoreapp3.0\DnD Discord Bot.pdb
+C:\Users\steve\OneDrive\Documents\GitHub\Personal-Projects\Bots\DnD Discord Bot\bin\Debug\netcoreapp3.0\Discord.Net.Commands.dll
+C:\Users\steve\OneDrive\Documents\GitHub\Personal-Projects\Bots\DnD Discord Bot\bin\Debug\netcoreapp3.0\Discord.Net.Core.dll
+C:\Users\steve\OneDrive\Documents\GitHub\Personal-Projects\Bots\DnD Discord Bot\bin\Debug\netcoreapp3.0\Discord.Net.Rest.dll
+C:\Users\steve\OneDrive\Documents\GitHub\Personal-Projects\Bots\DnD Discord Bot\bin\Debug\netcoreapp3.0\Discord.Net.Webhook.dll
+C:\Users\steve\OneDrive\Documents\GitHub\Personal-Projects\Bots\DnD Discord Bot\bin\Debug\netcoreapp3.0\Discord.Net.WebSocket.dll
+C:\Users\steve\OneDrive\Documents\GitHub\Personal-Projects\Bots\DnD Discord Bot\bin\Debug\netcoreapp3.0\Microsoft.Extensions.DependencyInjection.dll
+C:\Users\steve\OneDrive\Documents\GitHub\Personal-Projects\Bots\DnD Discord Bot\bin\Debug\netcoreapp3.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+C:\Users\steve\OneDrive\Documents\GitHub\Personal-Projects\Bots\DnD Discord Bot\bin\Debug\netcoreapp3.0\Newtonsoft.Json.dll
+C:\Users\steve\OneDrive\Documents\GitHub\Personal-Projects\Bots\DnD Discord Bot\bin\Debug\netcoreapp3.0\System.Interactive.Async.dll
+C:\Users\steve\OneDrive\Documents\GitHub\Personal-Projects\Bots\DnD Discord Bot\obj\Debug\netcoreapp3.0\DnD Discord Bot.csproj.CopyComplete
+C:\Users\steve\OneDrive\Documents\GitHub\Personal-Projects\Bots\DnD Discord Bot\obj\Debug\netcoreapp3.0\DnD Discord Bot.dll
+C:\Users\steve\OneDrive\Documents\GitHub\Personal-Projects\Bots\DnD Discord Bot\obj\Debug\netcoreapp3.0\DnD Discord Bot.pdb
+C:\Users\steve\OneDrive\Documents\GitHub\Personal-Projects\Bots\DnD Discord Bot\bin\Debug\netcoreapp3.0\System.Net.Http.Formatting.dll
+C:\Users\steve\OneDrive\Documents\GitHub\Personal-Projects\Bots\DnD Discord Bot\bin\Debug\netcoreapp3.0\Newtonsoft.Json.Bson.dll
+C:\Users\steve\OneDrive\Documents\GitHub\Personal-Projects\Bots\DnD Discord Bot\bin\Debug\netcoreapp3.0\Google.Apis.dll
+C:\Users\steve\OneDrive\Documents\GitHub\Personal-Projects\Bots\DnD Discord Bot\bin\Debug\netcoreapp3.0\Google.Apis.Auth.PlatformServices.dll
+C:\Users\steve\OneDrive\Documents\GitHub\Personal-Projects\Bots\DnD Discord Bot\bin\Debug\netcoreapp3.0\Google.Apis.Auth.dll
+C:\Users\steve\OneDrive\Documents\GitHub\Personal-Projects\Bots\DnD Discord Bot\bin\Debug\netcoreapp3.0\Google.Apis.Core.dll
+C:\Users\steve\OneDrive\Documents\GitHub\Personal-Projects\Bots\DnD Discord Bot\bin\Debug\netcoreapp3.0\Google.Apis.Sheets.v4.dll
+D:\GitHub\Personal-Projects\Bots\DnD Discord Bot\obj\Debug\netcoreapp3.0\DnD Discord Bot.csprojAssemblyReference.cache
+D:\GitHub\Personal-Projects\Bots\DnD Discord Bot\obj\Debug\netcoreapp3.0\DnD Discord Bot.AssemblyInfoInputs.cache
+D:\GitHub\Personal-Projects\Bots\DnD Discord Bot\obj\Debug\netcoreapp3.0\DnD Discord Bot.AssemblyInfo.cs
+D:\GitHub\Personal-Projects\Bots\DnD Discord Bot\obj\Debug\netcoreapp3.0\DnD Discord Bot.dll
+D:\GitHub\Personal-Projects\Bots\DnD Discord Bot\obj\Debug\netcoreapp3.0\DnD Discord Bot.pdb
+D:\GitHub\Personal-Projects\Bots\DnD Discord Bot\bin\Debug\netcoreapp3.0\DnD Discord Bot.exe
+D:\GitHub\Personal-Projects\Bots\DnD Discord Bot\bin\Debug\netcoreapp3.0\DnD Discord Bot.deps.json
+D:\GitHub\Personal-Projects\Bots\DnD Discord Bot\bin\Debug\netcoreapp3.0\DnD Discord Bot.runtimeconfig.json
+D:\GitHub\Personal-Projects\Bots\DnD Discord Bot\bin\Debug\netcoreapp3.0\DnD Discord Bot.runtimeconfig.dev.json
+D:\GitHub\Personal-Projects\Bots\DnD Discord Bot\bin\Debug\netcoreapp3.0\DnD Discord Bot.dll
+D:\GitHub\Personal-Projects\Bots\DnD Discord Bot\bin\Debug\netcoreapp3.0\DnD Discord Bot.pdb
+D:\GitHub\Personal-Projects\Bots\DnD Discord Bot\bin\Debug\netcoreapp3.0\Discord.Net.Commands.dll
+D:\GitHub\Personal-Projects\Bots\DnD Discord Bot\bin\Debug\netcoreapp3.0\Discord.Net.Core.dll
+D:\GitHub\Personal-Projects\Bots\DnD Discord Bot\bin\Debug\netcoreapp3.0\Discord.Net.Rest.dll
+D:\GitHub\Personal-Projects\Bots\DnD Discord Bot\bin\Debug\netcoreapp3.0\Discord.Net.Webhook.dll
+D:\GitHub\Personal-Projects\Bots\DnD Discord Bot\bin\Debug\netcoreapp3.0\Discord.Net.WebSocket.dll
+D:\GitHub\Personal-Projects\Bots\DnD Discord Bot\bin\Debug\netcoreapp3.0\Google.Apis.dll
+D:\GitHub\Personal-Projects\Bots\DnD Discord Bot\bin\Debug\netcoreapp3.0\Google.Apis.Auth.PlatformServices.dll
+D:\GitHub\Personal-Projects\Bots\DnD Discord Bot\bin\Debug\netcoreapp3.0\Google.Apis.Auth.dll
+D:\GitHub\Personal-Projects\Bots\DnD Discord Bot\bin\Debug\netcoreapp3.0\Google.Apis.Core.dll
+D:\GitHub\Personal-Projects\Bots\DnD Discord Bot\bin\Debug\netcoreapp3.0\Google.Apis.Sheets.v4.dll
+D:\GitHub\Personal-Projects\Bots\DnD Discord Bot\bin\Debug\netcoreapp3.0\System.Net.Http.Formatting.dll
+D:\GitHub\Personal-Projects\Bots\DnD Discord Bot\bin\Debug\netcoreapp3.0\Microsoft.Extensions.DependencyInjection.dll
+D:\GitHub\Personal-Projects\Bots\DnD Discord Bot\bin\Debug\netcoreapp3.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+D:\GitHub\Personal-Projects\Bots\DnD Discord Bot\bin\Debug\netcoreapp3.0\Newtonsoft.Json.dll
+D:\GitHub\Personal-Projects\Bots\DnD Discord Bot\bin\Debug\netcoreapp3.0\Newtonsoft.Json.Bson.dll
+D:\GitHub\Personal-Projects\Bots\DnD Discord Bot\bin\Debug\netcoreapp3.0\System.Interactive.Async.dll
+D:\GitHub\Personal-Projects\Bots\DnD Discord Bot\obj\Debug\netcoreapp3.0\DnD Discord Bot.csproj.CopyComplete
+D:\GitHub\Personal-Projects\Bots\DnD Discord Bot\obj\Debug\netcoreapp3.0\DnD Discord Bot.csproj.CoreCompileInputs.cache
+D:\GitHub\Personal-Projects\Bots\DnD Discord Bot\obj\Debug\netcoreapp3.0\DnD Discord Bot.genruntimeconfig.cache

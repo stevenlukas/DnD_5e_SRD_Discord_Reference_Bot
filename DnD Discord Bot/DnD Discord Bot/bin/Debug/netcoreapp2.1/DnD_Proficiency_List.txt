@@ -1,0 +1,122 @@
+Light armor
+Medium armor
+Heavy armor
+All armor
+Padded
+Leather
+Studded Leather
+Hide
+Chain Shirt
+Scale Mail
+Breastplate
+Half Plate
+Ring Mail
+Chain Mail
+Splint
+Plate
+Shield
+Shields
+Simple weapons
+Martial weapons
+Clubs
+Daggers
+Greatclubs
+Handaxes
+Javelins
+Light hammers
+Maces
+Quarterstaffs
+Sickles
+Spears
+Crossbows, light
+Darts
+Shortbows
+Slings
+Battleaxes
+Flails
+Glaives
+Greataxes
+Greatswords
+Halberds
+Lances
+Longswords
+Mauls
+Morningstars
+Pikes
+Rapiers
+Scimitars
+Shortswords
+Tridents
+War picks
+Warhammers
+Whips
+Blowguns
+Crossbows, hand
+Crossbows, heavy
+Longbows
+Nets
+Alchemist's supplies
+Brewer's supplies
+Calligrapher's supplies
+Carpenter's tools
+Cartographer's tools
+Cobbler's tools
+Cook's utensils
+Glassblower's tools
+Jeweler's tools
+Leatherworker's tools
+Mason's tools
+Painter's supplies
+Potter's tools
+Smith's tools
+Tinker's tools
+Weaver's tools
+Woodcarver's tools
+Disguise kit
+Forgery kit
+Dice Set
+Dragonchess set
+Playing card set
+Three-Dragon Ante set
+Bagpipes
+Drum
+Dulcimer
+Flute
+Lute
+Lyre
+Horn
+Pan flute
+Shawm
+Viol
+Disguise Kit
+Forgery Kit
+Herbalism Kit
+Navigator's Tools
+Poisoner's Kit
+Thieves' Tools
+Land Vehicles
+Water Vehicles
+Saving Throw: STR
+Saving Throw: DEX
+Saving Throw: CON
+Saving Throw: INT
+Saving Throw: WIS
+Saving Throw: CHA
+Skill: Acrobatics
+Skill: Animal Handling
+Skill: Arcana
+Skill: Athletics
+Skill: Deception
+Skill: History
+Skill: Insight
+Skill: Intimidation
+Skill: Investigation
+Skill: Medicine
+Skill: Nature
+Skill: Perception
+Skill: Performance
+Skill: Persuasion
+Skill: Religion
+Skill: Sleight of Hand
+Skill: Stealth
+Skill: Survival

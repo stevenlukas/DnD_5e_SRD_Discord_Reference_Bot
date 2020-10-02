@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
+    <RootNamespace>DnD_Discord_Bot</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="DnD Discord Bot\CommandHandler.cs" />
+    <Compile Remove="DnD Discord Bot\DiceBag.cs" />
+    <Compile Remove="DnD Discord Bot\InfoModule.cs" />
+    <Compile Remove="DnD Discord Bot\LoggingService.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Discord.Net" Version="2.1.1" />
+    <PackageReference Include="Google.Apis.Sheets.v4" Version="1.49.0.2087" />
+    <PackageReference Include="Microsoft.AspNet.WebApi.Client" Version="5.2.7" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
+  </ItemGroup>
+
+</Project>
