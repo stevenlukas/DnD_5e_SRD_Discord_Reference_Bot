@@ -143,7 +143,7 @@ namespace DnD_Discord_Bot.DnD_Discord_Bot
     }
 
     //Used for resolving Class API Calls
-    public class ClassProficiencyList
+    public class ClassFrom
     {
         public string index { get; set; }
         public string name { get; set; }
@@ -153,7 +153,7 @@ namespace DnD_Discord_Bot.DnD_Discord_Bot
     {
         public int choose { get; set; }
         public string type { get; set; }
-        public List<ClassProficiencyList> list { get; set; }
+        public List<ClassFrom> from { get; set; }
     }
     public class ClassProficiency
     {
@@ -187,6 +187,21 @@ namespace DnD_Discord_Bot.DnD_Discord_Bot
         public string spellcasting { get; set; }
         public string spells { get; set; }
         public string url { get; set; }
+    }
+
+    //Used for resolving Class Spell List API Calls
+
+    public class SpellListResult
+    {
+        public string index { get; set; }
+        public string name { get; set; }
+        public string url { get; set; }
+    }
+
+    public class ClassSpells
+    {
+        public int count { get; set; }
+        public List<SpellListResult> results { get; set; }
     }
 
     //Used for resolving Starting Equipment API Calls

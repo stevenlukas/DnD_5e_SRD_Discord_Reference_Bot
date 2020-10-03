@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\GitHub\\Personal-Projects\\Bots\\DnD Discord Bot\\DnD Discord Bot.csproj": {}
+    "D:\\GitHub\\DnD_5e_SRD_Discord_Reference_Bot\\DnD Discord Bot\\DnD Discord Bot.csproj": {}
   },
   "projects": {
-    "D:\\GitHub\\Personal-Projects\\Bots\\DnD Discord Bot\\DnD Discord Bot.csproj": {
+    "D:\\GitHub\\DnD_5e_SRD_Discord_Reference_Bot\\DnD Discord Bot\\DnD Discord Bot.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\GitHub\\Personal-Projects\\Bots\\DnD Discord Bot\\DnD Discord Bot.csproj",
+        "projectUniqueName": "D:\\GitHub\\DnD_5e_SRD_Discord_Reference_Bot\\DnD Discord Bot\\DnD Discord Bot.csproj",
         "projectName": "DnD Discord Bot",
-        "projectPath": "D:\\GitHub\\Personal-Projects\\Bots\\DnD Discord Bot\\DnD Discord Bot.csproj",
+        "projectPath": "D:\\GitHub\\DnD_5e_SRD_Discord_Reference_Bot\\DnD Discord Bot\\DnD Discord Bot.csproj",
         "packagesPath": "C:\\Users\\steve\\.nuget\\packages\\",
-        "outputPath": "D:\\GitHub\\Personal-Projects\\Bots\\DnD Discord Bot\\obj\\",
+        "outputPath": "D:\\GitHub\\DnD_5e_SRD_Discord_Reference_Bot\\DnD Discord Bot\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\steve\\AppData\\Roaming\\NuGet\\NuGet.Config",

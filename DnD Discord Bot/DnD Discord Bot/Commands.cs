@@ -511,17 +511,7 @@ namespace DnD_Discord_Bot.Modules
         [Command("class")]
         public async Task ClassLookup(string classes = null, [Remainder] string drillDown = null)
         {
-            long choice = 0;
-            string subClasses = null;
-            string proficiencies = null;
-            string weaponList = null;
-            string gearList = null;
-            string specialEquipmentList = null;
-            List <string> proficiencyChoiceList = new List<string>();
-            string proficiencyChoices = null;
-            string savingThrows = null;
             string classLookup;
-            string[] apiCallResult;
 
             if (classes == null)
             {
@@ -545,7 +535,6 @@ namespace DnD_Discord_Bot.Modules
                     }
                 }
 
-                Console.WriteLine("Class Located and Obtained");
                 classLookup = await _dndClient.GetStringAsync($"{classLookup}");
                 if (classLookup.Contains("â€™"));
                 {
@@ -553,55 +542,90 @@ namespace DnD_Discord_Bot.Modules
                 }
 
                 Class classObject = JsonConvert.DeserializeObject<Class>(classLookup);
-                string classHeader = $"Name: {classObject.name}\nHit Die: {classObject.hit_die}\n";
 
-                Console.WriteLine("Class Converted");
-                //proficiencies
-                string classProficiency = $"~\n";
-                for(int i = 0; i < classObject.proficiency_choices.Count; i++)
+                if (drillDown != null)
                 {
-                    Console.WriteLine("Iterating Proficiencies");
-                    Console.WriteLine(classObject.proficiency_choices[i].choose);
-                    classProficiency += $"Choose {classObject.proficiency_choices[i].choose} from:";
-                    if(classObject.proficiency_choices[i].list != null)
+                    switch (drillDown)
                     {
-                        for (int j = 0; j < classObject.proficiency_choices[i].list.Count; j++)
+                        case "spells":
+                            if(classObject.spellcasting != null)
+                            {
+                                classLookup = _dnd5eURL + classObject.spells;
+                                classLookup = await _dndClient.GetStringAsync($"{classLookup}");
+                                ClassSpells spellObject = JsonConvert.DeserializeObject<ClassSpells>(classLookup);
+
+                                string spellResult = $"{classObject.name} Spells:";
+
+                                for (int i = 0; i < spellObject.results.Count; i++)
+                                {
+                                    spellResult += $"\n{spellObject.results[i].name}";
+                                }
+                                await ReplyAsync(spellResult);
+                            }
+                            else
+                            {
+                                await ReplyAsync($"The {classObject.name} class does not know any spells by default");
+                            }
+                            
+                            break;
+
+                        case "levels":
+                            break;
+
+                        case "starting equipment":
+                            break;
+
+                        case "spellcasting":
+                            break;
+
+                        default:
+                            Console.WriteLine("Spaces may be a problem...");
+                            break;
+                    }
+                }
+                else
+                {
+                    string classHeader = $"Name: {classObject.name}\nHit Die: {classObject.hit_die}\n";
+
+                    //proficiencies
+                    string classProficiency = $"\n~\nProficiencies:\n";
+                    for (int i = 0; i < classObject.proficiency_choices.Count; i++)
+                    {
+                        classProficiency += $"\nChoose {classObject.proficiency_choices[i].choose} from:";
+                        if (classObject.proficiency_choices[i].from != null)
                         {
-                            Console.WriteLine("Listing Choices");
-                            Console.WriteLine(classObject.proficiency_choices[i].list[j].name);
-                            classProficiency += $"\n{classObject.proficiency_choices[i].list[j].name}";
+                            for (int j = 0; j < classObject.proficiency_choices[i].from.Count; j++)
+                            {
+                                classProficiency += $"\n{classObject.proficiency_choices[i].from[j].name}";
+                            }
+                            classProficiency.Replace("Skill: ", "");
+                            classProficiency += "\n";
                         }
                     }
-                }
-                if(classObject.proficiencies != null)
-                {
-                    classProficiency += $"\n\nAdditional Proficiencies: ";
-                    for(int i = 0; i < classObject.proficiencies.Count; i++)
+                    if (classObject.proficiencies != null)
                     {
-                        classProficiency += $"\n{classObject.proficiencies[i].name}";
+                        classProficiency += $"\nAdditional Proficiencies: ";
+                        for (int i = 0; i < classObject.proficiencies.Count; i++)
+                        {
+                            classProficiency += $"\n{classObject.proficiencies[i].name}";
+                        }
                     }
-                }
-                Console.WriteLine("Proficiencies listed");
-                //saving throws
-                string classSavingThrow = $"~\nSaving Throws:";
-                for(int i = 0; i < classObject.saving_throws.Count; i++)
-                {
-                    classSavingThrow += $"\n{classObject.saving_throws[i].name}";
-                }
-                Console.WriteLine("Proficiencies Listed");
-                //subclasses
-                string classSubClass = $"~\nSubclasses:";
-                for (int i = 0; i < classObject.subclasses.Count; i++)
-                {
-                    classSubClass += $"\n{classObject.subclasses[i].name}";
-                }
-                Console.WriteLine("Subclasses Listed");
-                await ReplyAsync(classHeader + classSavingThrow + classProficiency + classSubClass);
 
-                //starting equipment
-                //levels
-                //spellcasting
-                //spells
+                    //saving throws
+                    string classSavingThrow = $"Saving Throws: ";
+                    for (int i = 0; i < classObject.saving_throws.Count; i++)
+                    {
+                        classSavingThrow += $"{classObject.saving_throws[i].name} ";
+                    }
+                    //subclasses
+                    string classSubClass = $"\n~\nSubclasses:";
+                    for (int i = 0; i < classObject.subclasses.Count; i++)
+                    {
+                        classSubClass += $"\n{classObject.subclasses[i].name}";
+                    }
+                    await ReplyAsync(classHeader + classSavingThrow + classProficiency + classSubClass);
+                    await ReplyAsync($"For Starting Equipment, Levels, Spellcasting, or Spells, use !class {classObject.name} starting equipment, levels, spellcasting, or spells");
+                }
             }
         }
         /*
