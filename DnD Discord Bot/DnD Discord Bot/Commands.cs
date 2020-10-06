@@ -570,6 +570,113 @@ namespace DnD_Discord_Bot.Modules
                             break;
 
                         case "levels":
+                            string[] levelResult = new string[10];
+
+                            if (classObject.class_levels != null)
+                            {
+                                classLookup = _dnd5eURL + classObject.class_levels;
+                                classLookup = await _dndClient.GetStringAsync($"{classLookup}");
+                                Level classLevel = JsonConvert.DeserializeObject<Level>(classLookup);
+                                Console.WriteLine(" I Get Here");
+                                string levelHeader = null;
+                                string levelAbilityScore = null;
+                                string levelFeatures = null;
+                                string levelSpellcasting = null;
+                                string levelProficiency = null;
+                                string levelContent;
+
+                                for (int i = 0; i < classLevel.levelContents.Count; i++)
+                                {
+                                    if (i == 1 && classLevel.levelContents[i].level == 1)
+                                    {
+                                        goto FeatureAdd;
+                                    }
+                                    levelHeader = $"Level {classLevel.levelContents[i].level}\n";
+                                    if (classLevel.levelContents[i].ability_score_bonuses != 0)
+                                    {
+                                        levelAbilityScore = $"Ability Score Bonuses: {classLevel.levelContents[i].ability_score_bonuses}\n";
+                                    }
+                                    levelProficiency = $"Proficiency Bonus: {classLevel.levelContents[i].prof_bonus}\n";
+                                FeatureAdd:;
+                                    if (classLevel.levelContents[i].features.Count != 0)
+                                    {
+                                        if (i == 1 && classLevel.levelContents[i].level != 1)
+                                        {
+                                            levelFeatures = "Features: ";
+                                        }
+                                        
+                                        for (int j = 0; j < classLevel.levelContents[i].features.Count; j++)
+                                        {
+                                            levelFeatures += classLevel.levelContents[i].features[j].name + " ";
+                                        }
+                                        levelFeatures += "\n";
+                                    }
+                                    if(classLevel.levelContents[i].level == 1 && i == 1)
+                                    {
+                                        goto LevelSkip;
+                                    }
+                                    if (classLevel.levelContents[i].spellcasting != null)
+                                    {
+                                        levelSpellcasting = $"Cantrips Known: {classLevel.levelContents[i].spellcasting.cantrips_known}\n";
+                                        levelSpellcasting += $"Spells Known: {classLevel.levelContents[i].spellcasting.spells_known}\n";
+                                        if (classLevel.levelContents[i].spellcasting.spell_slots_level_1 != 0)
+                                        {
+                                            levelSpellcasting += $"Level One Spell Slots: {classLevel.levelContents[i].spellcasting.spell_slots_level_1}\n";
+                                        }
+                                        if (classLevel.levelContents[i].spellcasting.spell_slots_level_2 != 0)
+                                        {
+                                            levelSpellcasting += $"Level Two Spell Slots: {classLevel.levelContents[i].spellcasting.spell_slots_level_2}\n";
+                                        }
+                                        if (classLevel.levelContents[i].spellcasting.spell_slots_level_3 != 0)
+                                        {
+                                            levelSpellcasting += $"Level Three Spell Slots: {classLevel.levelContents[i].spellcasting.spell_slots_level_3}\n";
+                                        }
+                                        if (classLevel.levelContents[i].spellcasting.spell_slots_level_4 != 0)
+                                        {
+                                            levelSpellcasting += $"Level Four Spell Slots: {classLevel.levelContents[i].spellcasting.spell_slots_level_4}\n";
+                                        }
+                                        if (classLevel.levelContents[i].spellcasting.spell_slots_level_5 != 0)
+                                        {
+                                            levelSpellcasting += $"Level Five Spell Slots: {classLevel.levelContents[i].spellcasting.spell_slots_level_5}\n";
+                                        }
+                                        if (classLevel.levelContents[i].spellcasting.spell_slots_level_6 != 0)
+                                        {
+                                            levelSpellcasting += $"Level Six Spell Slots: {classLevel.levelContents[i].spellcasting.spell_slots_level_6}\n";
+                                        }
+                                        if (classLevel.levelContents[i].spellcasting.spell_slots_level_7 != 0)
+                                        {
+                                            levelSpellcasting += $"Level Seven Spell Slots: {classLevel.levelContents[i].spellcasting.spell_slots_level_7}\n";
+                                        }
+                                        if (classLevel.levelContents[i].spellcasting.spell_slots_level_8 != 0)
+                                        {
+                                            levelSpellcasting += $"Level Eight Spell Slots: {classLevel.levelContents[i].spellcasting.spell_slots_level_8}\n";
+                                        }
+                                        if (classLevel.levelContents[i].spellcasting.spell_slots_level_9 != 0)
+                                        {
+                                            levelSpellcasting += $"Level Nine Spell Slots: {classLevel.levelContents[i].spellcasting.spell_slots_level_9}\n";
+                                        }
+                                    }
+
+                                    levelContent = levelHeader + levelAbilityScore + levelProficiency;
+                                    if(levelFeatures != null)
+                                    {
+                                        levelContent += levelFeatures;
+                                    }
+                                    if(levelSpellcasting != null)
+                                    {
+                                        levelContent += levelSpellcasting;
+                                    }
+
+                                    levelResult[i] = levelContent;
+                                    
+                                LevelSkip:;
+
+                                }
+                            }
+                            foreach (string result in levelResult)
+                            {
+                                await ReplyAsync(result);
+                            }
                             break;
 
                         case "starting equipment":

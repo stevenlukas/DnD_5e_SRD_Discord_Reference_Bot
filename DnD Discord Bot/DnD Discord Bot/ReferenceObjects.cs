@@ -190,19 +190,92 @@ namespace DnD_Discord_Bot.DnD_Discord_Bot
     }
 
     //Used for resolving Class Spell List API Calls
-
     public class SpellListResult
     {
         public string index { get; set; }
         public string name { get; set; }
         public string url { get; set; }
     }
-
     public class ClassSpells
     {
         public int count { get; set; }
         public List<SpellListResult> results { get; set; }
     }
+
+    //Used for resolving Class Level API Calls
+    public class LevelFeatureChoice
+    {
+        public string index { get; set; }
+        public string name { get; set; }
+        public string url { get; set; }
+    }
+
+    public class LevelFeature
+    {
+        public string index { get; set; }
+        public string name { get; set; }
+        public string url { get; set; }
+    }
+
+    public class LevelSpellcasting
+    {
+        public int cantrips_known { get; set; }
+        public int spells_known { get; set; }
+        public int spell_slots_level_1 { get; set; }
+        public int spell_slots_level_2 { get; set; }
+        public int spell_slots_level_3 { get; set; }
+        public int spell_slots_level_4 { get; set; }
+        public int spell_slots_level_5 { get; set; }
+        public int spell_slots_level_6 { get; set; }
+        public int spell_slots_level_7 { get; set; }
+        public int spell_slots_level_8 { get; set; }
+        public int spell_slots_level_9 { get; set; }
+    }
+
+    public class LevelClassSpecific
+    {
+        public int invocations_known { get; set; }
+        public int mystic_arcanum_level_6 { get; set; }
+        public int mystic_arcanum_level_7 { get; set; }
+        public int mystic_arcanum_level_8 { get; set; }
+        public int mystic_arcanum_level_9 { get; set; }
+    }
+
+    public class LevelClass
+    {
+        public string index { get; set; }
+        public string name { get; set; }
+        public string url { get; set; }
+    }
+
+    public class LevelSubclass
+    {
+        public string index { get; set; }
+        public string name { get; set; }
+        public string url { get; set; }
+    }
+
+    public class LevelContents
+    {
+        public int level { get; set; }
+        public int ability_score_bonuses { get; set; }
+        public int prof_bonus { get; set; }
+        public List<LevelFeatureChoice> feature_choices { get; set; }
+        public List<LevelFeature> features { get; set; }
+        public LevelSpellcasting spellcasting { get; set; }
+        public LevelClassSpecific class_specific { get; set; }
+        public string index { get; set; }
+        public Class @class { get; set; }
+        public string url { get; set; }
+        public LevelSubclass subclass { get; set; }
+    }
+
+    public class Level
+    {
+        public List<LevelContents> levelContents { get; set; }
+    }
+
+
 
     //Used for resolving Starting Equipment API Calls
     public class StartingEquipmentClass
