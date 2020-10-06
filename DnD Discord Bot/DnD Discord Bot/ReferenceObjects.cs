@@ -203,20 +203,19 @@ namespace DnD_Discord_Bot.DnD_Discord_Bot
     }
 
     //Used for resolving Class Level API Calls
+    // Root myDeserializedClass = JsonConvert.DeserializeObject<Root>(myJsonResponse); 
     public class LevelFeatureChoice
     {
         public string index { get; set; }
         public string name { get; set; }
         public string url { get; set; }
     }
-
     public class LevelFeature
     {
         public string index { get; set; }
         public string name { get; set; }
         public string url { get; set; }
     }
-
     public class LevelSpellcasting
     {
         public int cantrips_known { get; set; }
@@ -231,7 +230,6 @@ namespace DnD_Discord_Bot.DnD_Discord_Bot
         public int spell_slots_level_8 { get; set; }
         public int spell_slots_level_9 { get; set; }
     }
-
     public class LevelClassSpecific
     {
         public int invocations_known { get; set; }
@@ -240,22 +238,13 @@ namespace DnD_Discord_Bot.DnD_Discord_Bot
         public int mystic_arcanum_level_8 { get; set; }
         public int mystic_arcanum_level_9 { get; set; }
     }
-
     public class LevelClass
     {
         public string index { get; set; }
         public string name { get; set; }
         public string url { get; set; }
     }
-
-    public class LevelSubclass
-    {
-        public string index { get; set; }
-        public string name { get; set; }
-        public string url { get; set; }
-    }
-
-    public class LevelContents
+    public class Level
     {
         public int level { get; set; }
         public int ability_score_bonuses { get; set; }
@@ -265,17 +254,9 @@ namespace DnD_Discord_Bot.DnD_Discord_Bot
         public LevelSpellcasting spellcasting { get; set; }
         public LevelClassSpecific class_specific { get; set; }
         public string index { get; set; }
-        public Class @class { get; set; }
+        public LevelClass @class { get; set; }
         public string url { get; set; }
-        public LevelSubclass subclass { get; set; }
     }
-
-    public class Level
-    {
-        public List<LevelContents> levelContents { get; set; }
-    }
-
-
 
     //Used for resolving Starting Equipment API Calls
     public class StartingEquipmentClass

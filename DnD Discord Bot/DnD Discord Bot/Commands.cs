@@ -220,7 +220,7 @@ namespace DnD_Discord_Bot.Modules
                         spellHeader += "\nThis spell requires concentration (C)";
                     }
 
-                    spellHeader += "\n~\n";
+                    spellHeader += "\n\n";
 
                     await ReplyAsync(spellHeader);
                     
@@ -230,7 +230,7 @@ namespace DnD_Discord_Bot.Modules
                     }
                     if(spellObject.higher_level != null)
                     {
-                        string higherLevel = "~\nCasting with higher levels:\n";
+                        string higherLevel = "\nCasting with higher levels:\n";
                         foreach(string higherLevelDesc in spellObject.higher_level)
                         {
                             higherLevel += $"{higherLevelDesc}\n";
@@ -238,7 +238,7 @@ namespace DnD_Discord_Bot.Modules
                         await ReplyAsync(higherLevel);
                     }
 
-                    string additionalData = "~\nComponents: ";
+                    string additionalData = "\nComponents: ";
                     foreach(string component in spellObject.components)
                     {
                         additionalData += $"{component} ";
@@ -344,12 +344,12 @@ namespace DnD_Discord_Bot.Modules
                 Ability abilityScoreObject = JsonConvert.DeserializeObject<Ability>(abilityScoreLookup);
 
                 string abilityHeader = $"Name: {abilityScoreObject.full_name}\nAbbreviation: {abilityScoreObject.name}\n";
-                string abilityDesc = "~\n";
+                string abilityDesc = "\n";
                 foreach(string desc in abilityScoreObject.desc)
                 {
                     abilityDesc += $"{desc}\n";
                 }
-                string abilitySkill = "~\nSkills:\n";
+                string abilitySkill = "\nSkills:\n";
                 foreach(AbilitySkill skill in abilityScoreObject.skills)
                 {
                     abilitySkill += $"{skill.name}\n";
@@ -395,7 +395,7 @@ namespace DnD_Discord_Bot.Modules
                 Skill skillObject = JsonConvert.DeserializeObject<Skill>(skillLookup);
 
                 string skillHeader = $"Name: {skillObject.name}\nAbility: {skillObject.ability_score.name}\n";
-                string skillDesc = "~\n";
+                string skillDesc = "\n";
                 foreach(string desc in skillObject.desc)
                 {
                     skillDesc += $"{desc}\n";
@@ -487,8 +487,8 @@ namespace DnD_Discord_Bot.Modules
                 Language languageObject = JsonConvert.DeserializeObject<Language>(languageLookup);
 
                 string languageHeader = $"Name: {languageObject.name}\nType: {languageObject.type}\nScript: {languageObject.script}\n";
-                string languageDesc = $"~\n{languageObject.desc}\n";
-                string languageSpeakers = "~\nTypical Speakers:\n";
+                string languageDesc = $"\n{languageObject.desc}\n";
+                string languageSpeakers = "\nTypical Speakers:\n";
 
                 foreach (string speaker in languageObject.typical_speakers)
                 {
@@ -545,6 +545,14 @@ namespace DnD_Discord_Bot.Modules
 
                 if (drillDown != null)
                 {
+                    string[] commandResults;
+                    string classLevel = null;
+                    if(drillDown.Contains("level"))
+                    {
+                        commandResults = drillDown.Split(" ");
+                        drillDown = "level";
+                        classLevel = commandResults[1];
+                    }
                     switch (drillDown)
                     {
                         case "spells":
@@ -566,117 +574,135 @@ namespace DnD_Discord_Bot.Modules
                             {
                                 await ReplyAsync($"The {classObject.name} class does not know any spells by default");
                             }
-                            
                             break;
 
-                        case "levels":
-                            string[] levelResult = new string[10];
+                        case "level":
+                            string levelSpellcasting = null;
+                            string levelFeatureChoice = null;
+                            string levelFeatures = null;
+                            string levelHeader = null;
+                            string levelResults = null;
+                            classLookup = $"{_dnd5eURL}/api/classes/{classObject.name}/levels/{classLevel}";
+                            classLookup = classLookup.ToLower();
+                            classLookup = await _dndClient.GetStringAsync($"{classLookup}");
+                            Level level = JsonConvert.DeserializeObject<Level>(classLookup);
 
-                            if (classObject.class_levels != null)
+                            //Build general header
+                            levelHeader = $"Class: {level.@class.name}\nLevel: {level.level}\nProficiency Bonus: {level.prof_bonus}";
+                            if(level.ability_score_bonuses != 0)
                             {
-                                classLookup = _dnd5eURL + classObject.class_levels;
-                                classLookup = await _dndClient.GetStringAsync($"{classLookup}");
-                                Level classLevel = JsonConvert.DeserializeObject<Level>(classLookup);
-                                Console.WriteLine(" I Get Here");
-                                string levelHeader = null;
-                                string levelAbilityScore = null;
-                                string levelFeatures = null;
-                                string levelSpellcasting = null;
-                                string levelProficiency = null;
-                                string levelContent;
+                                levelHeader += $"\nAbility Score Bonuses: {level.ability_score_bonuses}";
+                            }
 
-                                for (int i = 0; i < classLevel.levelContents.Count; i++)
+                            //Build features
+                            if(level.features.Count != 0)
+                            {
+                                levelFeatures = "\nFeatures: ";
+                                for (int i = 0; i < level.features.Count; i++)
                                 {
-                                    if (i == 1 && classLevel.levelContents[i].level == 1)
+                                    levelFeatures += $"{level.features[i].name}";
+                                    if (i != level.features.Count - 1)
                                     {
-                                        goto FeatureAdd;
+                                        levelFeatures += ", ";
                                     }
-                                    levelHeader = $"Level {classLevel.levelContents[i].level}\n";
-                                    if (classLevel.levelContents[i].ability_score_bonuses != 0)
-                                    {
-                                        levelAbilityScore = $"Ability Score Bonuses: {classLevel.levelContents[i].ability_score_bonuses}\n";
-                                    }
-                                    levelProficiency = $"Proficiency Bonus: {classLevel.levelContents[i].prof_bonus}\n";
-                                FeatureAdd:;
-                                    if (classLevel.levelContents[i].features.Count != 0)
-                                    {
-                                        if (i == 1 && classLevel.levelContents[i].level != 1)
-                                        {
-                                            levelFeatures = "Features: ";
-                                        }
-                                        
-                                        for (int j = 0; j < classLevel.levelContents[i].features.Count; j++)
-                                        {
-                                            levelFeatures += classLevel.levelContents[i].features[j].name + " ";
-                                        }
-                                        levelFeatures += "\n";
-                                    }
-                                    if(classLevel.levelContents[i].level == 1 && i == 1)
-                                    {
-                                        goto LevelSkip;
-                                    }
-                                    if (classLevel.levelContents[i].spellcasting != null)
-                                    {
-                                        levelSpellcasting = $"Cantrips Known: {classLevel.levelContents[i].spellcasting.cantrips_known}\n";
-                                        levelSpellcasting += $"Spells Known: {classLevel.levelContents[i].spellcasting.spells_known}\n";
-                                        if (classLevel.levelContents[i].spellcasting.spell_slots_level_1 != 0)
-                                        {
-                                            levelSpellcasting += $"Level One Spell Slots: {classLevel.levelContents[i].spellcasting.spell_slots_level_1}\n";
-                                        }
-                                        if (classLevel.levelContents[i].spellcasting.spell_slots_level_2 != 0)
-                                        {
-                                            levelSpellcasting += $"Level Two Spell Slots: {classLevel.levelContents[i].spellcasting.spell_slots_level_2}\n";
-                                        }
-                                        if (classLevel.levelContents[i].spellcasting.spell_slots_level_3 != 0)
-                                        {
-                                            levelSpellcasting += $"Level Three Spell Slots: {classLevel.levelContents[i].spellcasting.spell_slots_level_3}\n";
-                                        }
-                                        if (classLevel.levelContents[i].spellcasting.spell_slots_level_4 != 0)
-                                        {
-                                            levelSpellcasting += $"Level Four Spell Slots: {classLevel.levelContents[i].spellcasting.spell_slots_level_4}\n";
-                                        }
-                                        if (classLevel.levelContents[i].spellcasting.spell_slots_level_5 != 0)
-                                        {
-                                            levelSpellcasting += $"Level Five Spell Slots: {classLevel.levelContents[i].spellcasting.spell_slots_level_5}\n";
-                                        }
-                                        if (classLevel.levelContents[i].spellcasting.spell_slots_level_6 != 0)
-                                        {
-                                            levelSpellcasting += $"Level Six Spell Slots: {classLevel.levelContents[i].spellcasting.spell_slots_level_6}\n";
-                                        }
-                                        if (classLevel.levelContents[i].spellcasting.spell_slots_level_7 != 0)
-                                        {
-                                            levelSpellcasting += $"Level Seven Spell Slots: {classLevel.levelContents[i].spellcasting.spell_slots_level_7}\n";
-                                        }
-                                        if (classLevel.levelContents[i].spellcasting.spell_slots_level_8 != 0)
-                                        {
-                                            levelSpellcasting += $"Level Eight Spell Slots: {classLevel.levelContents[i].spellcasting.spell_slots_level_8}\n";
-                                        }
-                                        if (classLevel.levelContents[i].spellcasting.spell_slots_level_9 != 0)
-                                        {
-                                            levelSpellcasting += $"Level Nine Spell Slots: {classLevel.levelContents[i].spellcasting.spell_slots_level_9}\n";
-                                        }
-                                    }
+                                }
+                            } 
 
-                                    levelContent = levelHeader + levelAbilityScore + levelProficiency;
-                                    if(levelFeatures != null)
-                                    {
-                                        levelContent += levelFeatures;
-                                    }
-                                    if(levelSpellcasting != null)
-                                    {
-                                        levelContent += levelSpellcasting;
-                                    }
-
-                                    levelResult[i] = levelContent;
-                                    
-                                LevelSkip:;
-
+                            //Build spellcasting for casters
+                            if(level.spellcasting != null)
+                            {
+                                levelSpellcasting += "\n";
+                                if(level.spellcasting.cantrips_known != 0)
+                                {
+                                    levelSpellcasting += $"Cantrips Known: {level.spellcasting.cantrips_known}\n";
+                                }
+                                if (level.spellcasting.spells_known != 0)
+                                {
+                                    levelSpellcasting += $"Spells Known: {level.spellcasting.spells_known}\n";
+                                }
+                                if (level.spellcasting.spell_slots_level_1 != 0)
+                                {
+                                    levelSpellcasting += $"Spell Slots L1: {level.spellcasting.spell_slots_level_1}\n";
+                                }
+                                if (level.spellcasting.spell_slots_level_2 != 0)
+                                {
+                                    levelSpellcasting += $"Spell Slots L2: {level.spellcasting.spell_slots_level_2}\n";
+                                }
+                                if (level.spellcasting.spell_slots_level_3 != 0)
+                                {
+                                    levelSpellcasting += $"Spell Slots L3: {level.spellcasting.spell_slots_level_3}\n";
+                                }
+                                if (level.spellcasting.spell_slots_level_4 != 0)
+                                {
+                                    levelSpellcasting += $"Spell Slots L4: {level.spellcasting.spell_slots_level_4}\n";
+                                }
+                                if (level.spellcasting.spell_slots_level_5 != 0)
+                                {
+                                    levelSpellcasting += $"Spell Slots L5: {level.spellcasting.spell_slots_level_5}\n";
+                                }
+                                if (level.spellcasting.spell_slots_level_6 != 0)
+                                {
+                                    levelSpellcasting += $"Spell Slots L6: {level.spellcasting.spell_slots_level_6}\n";
+                                }
+                                if (level.spellcasting.spell_slots_level_7 != 0)
+                                {
+                                    levelSpellcasting += $"Spell Slots L7: {level.spellcasting.spell_slots_level_7}\n";
+                                }
+                                if (level.spellcasting.spell_slots_level_8 != 0)
+                                {
+                                    levelSpellcasting += $"Spell Slots L8: {level.spellcasting.spell_slots_level_8}\n";
+                                }
+                                if (level.spellcasting.spell_slots_level_9 != 0)
+                                {
+                                    levelSpellcasting += $"Spell Slots L9: {level.spellcasting.spell_slots_level_9}\n";
                                 }
                             }
-                            foreach (string result in levelResult)
+                            if (level.feature_choices != null)
                             {
-                                await ReplyAsync(result);
+                                for (int i = 0; i < level.feature_choices.Count; i++)
+                                {
+                                    levelFeatureChoice += $"{level.feature_choices[i].name}\n";
+                                }
                             }
+                            if(level.class_specific != null)
+                            {
+                                if(level.class_specific.invocations_known != 0)
+                                {
+                                    levelSpellcasting += $"\nInvocations Known: {level.class_specific.invocations_known}\n";
+                                }
+                                if(level.class_specific.mystic_arcanum_level_6 != 0)
+                                {
+                                    levelSpellcasting += $"Mystic Arcanum L6: {level.class_specific.mystic_arcanum_level_6}\n";
+                                }
+                                if (level.class_specific.mystic_arcanum_level_7 != 0)
+                                {
+                                    levelSpellcasting += $"Mystic Arcanum L7: {level.class_specific.mystic_arcanum_level_7}\n";
+                                }
+                                if (level.class_specific.mystic_arcanum_level_8 != 0)
+                                {
+                                    levelSpellcasting += $"Mystic Arcanum L8: {level.class_specific.mystic_arcanum_level_8}\n";
+                                }
+                                if (level.class_specific.mystic_arcanum_level_9 != 0)
+                                {
+                                    levelSpellcasting += $"Mystic Arcanum L9: {level.class_specific.mystic_arcanum_level_9}\n";
+                                }
+                            }
+
+                            levelResults = levelHeader;
+                            if(levelFeatures != null)
+                            {
+                                levelResults += levelFeatures;
+                            }
+                            if(levelFeatureChoice != null)
+                            {
+                                levelResults += levelFeatureChoice;
+                            }
+                            if(levelSpellcasting != null)
+                            {
+                                levelResults += levelSpellcasting;
+                            }
+
+                            await ReplyAsync(levelResults);
                             break;
 
                         case "starting equipment":
@@ -692,10 +718,10 @@ namespace DnD_Discord_Bot.Modules
                 }
                 else
                 {
-                    string classHeader = $"Name: {classObject.name}\nHit Die: {classObject.hit_die}\n";
+                    string classHeader = $"Name: {classObject.name}\nHit Die: d{classObject.hit_die}\n";
 
                     //proficiencies
-                    string classProficiency = $"\n~\nProficiencies:\n";
+                    string classProficiency = $"\n\nProficiencies";
                     for (int i = 0; i < classObject.proficiency_choices.Count; i++)
                     {
                         classProficiency += $"\nChoose {classObject.proficiency_choices[i].choose} from:";
@@ -711,7 +737,7 @@ namespace DnD_Discord_Bot.Modules
                     }
                     if (classObject.proficiencies != null)
                     {
-                        classProficiency += $"\nAdditional Proficiencies: ";
+                        classProficiency += $"\nAdditional Proficiencies ";
                         for (int i = 0; i < classObject.proficiencies.Count; i++)
                         {
                             classProficiency += $"\n{classObject.proficiencies[i].name}";
@@ -725,13 +751,13 @@ namespace DnD_Discord_Bot.Modules
                         classSavingThrow += $"{classObject.saving_throws[i].name} ";
                     }
                     //subclasses
-                    string classSubClass = $"\n~\nSubclasses:";
+                    string classSubClass = $"\n\nSubclasses:";
                     for (int i = 0; i < classObject.subclasses.Count; i++)
                     {
                         classSubClass += $"\n{classObject.subclasses[i].name}";
                     }
                     await ReplyAsync(classHeader + classSavingThrow + classProficiency + classSubClass);
-                    await ReplyAsync($"For Starting Equipment, Levels, Spellcasting, or Spells, use !class {classObject.name} starting equipment, levels, spellcasting, or spells");
+                    await ReplyAsync($"For Starting Equipment, Levels, Spellcasting, or Spells, use !class {classObject.name} starting equipment, level {{level number}}, spellcasting, or spells");
                 }
             }
         }
@@ -787,19 +813,19 @@ namespace DnD_Discord_Bot.Modules
                     raceSubraces = raceSubraces + "\n" + raceObject.subraces[i].name;
                 }
 
-                await ReplyAsync($"Race: {raceObject.name}\n~\nSpeed: {raceObject.speed}\n~\nAge: {raceObject.age}\n~\nAlignment: {raceObject.alignment}\n");
-                await ReplyAsync($"­~\nSize: {raceObject.size}\n{raceObject.sizeDescription}\n~\nLanguages: {raceObject.languageDesc}\n");
+                await ReplyAsync($"Race: {raceObject.name}\n\nSpeed: {raceObject.speed}\n\nAge: {raceObject.age}\n\nAlignment: {raceObject.alignment}\n");
+                await ReplyAsync($"­\nSize: {raceObject.size}\n{raceObject.sizeDescription}\n\nLanguages: {raceObject.languageDesc}\n");
                 if (raceTraits != null)
                 {
-                    await ReplyAsync($"~\nTraits:{raceTraits}\n");
+                    await ReplyAsync($"\nTraits:{raceTraits}\n");
                 }
                 if (raceProficiencies != null)
                 {
-                    await ReplyAsync($"~\nProficiencies: {raceProficiencies}\n");
+                    await ReplyAsync($"\nProficiencies: {raceProficiencies}\n");
                 }
                 if (raceSubraces != null)
                 {
-                    await ReplyAsync($"~\nSubraces:{raceSubraces}");
+                    await ReplyAsync($"\nSubraces:{raceSubraces}");
                 }
             }
         }
@@ -875,7 +901,7 @@ namespace DnD_Discord_Bot.Modules
                     Subclass subclassObject = JsonConvert.DeserializeObject<Subclass>(subclass);
                         //Console.WriteLine(subclassObject.Class.name);
                         //Console.WriteLine(subclassObject.name);
-                    await ReplyAsync($"{subclassObject.name}\n~\n");
+                    await ReplyAsync($"{subclassObject.name}\n\n");
                         //Console.WriteLine("No");
                     foreach (string description in subclassObject.desc)
                     {
@@ -891,7 +917,7 @@ namespace DnD_Discord_Bot.Modules
                         subclassLookup = await _dndClient.GetStringAsync(subclassObject.features[i].url);
                         Feature subclassFeature = JsonConvert.DeserializeObject<Feature>(subclassLookup);
                             //Console.WriteLine(subclassFeature.name);
-                        await ReplyAsync($"\n~\nSubclass Feature: {subclassFeature.name}");
+                        await ReplyAsync($"\n\nSubclass Feature: {subclassFeature.name}");
                         //Console.WriteLine(subclassFeature.level);
                         await ReplyAsync($"\n\nObtained at Level {subclassFeature.level}\n\n");
                         foreach (string description in subclassFeature.desc)
@@ -906,7 +932,7 @@ namespace DnD_Discord_Bot.Modules
 
                         if (subclassObject.spells != null)
                     {
-                        await ReplyAsync("\n~\nSubclass Spells\n\n");
+                        await ReplyAsync("\n\nSubclass Spells\n\n");
                         Console.WriteLine(subclassObject.spells.Length);
                         for (int i = 0; i < subclassObject.spells.Length; i++)
                         {
