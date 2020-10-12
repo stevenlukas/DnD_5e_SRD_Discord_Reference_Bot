@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 using Newtonsoft.Json;
 
 namespace DnD_Discord_Bot.DnD_Discord_Bot
@@ -203,7 +204,6 @@ namespace DnD_Discord_Bot.DnD_Discord_Bot
     }
 
     //Used for resolving Class Level API Calls
-    // Root myDeserializedClass = JsonConvert.DeserializeObject<Root>(myJsonResponse); 
     public class LevelFeatureChoice
     {
         public string index { get; set; }
@@ -237,6 +237,83 @@ namespace DnD_Discord_Bot.DnD_Discord_Bot
         public int mystic_arcanum_level_7 { get; set; }
         public int mystic_arcanum_level_8 { get; set; }
         public int mystic_arcanum_level_9 { get; set; }
+        [JsonProperty("rage_count")]
+        public long rageCount { get; set; }
+        [JsonProperty("rage_damage_bonus")]
+        public long rageDamageBonus { get; set; }
+        [JsonProperty("brutal_critical_dice")]
+        public long brutalCriticalDice { get; set; }
+        [JsonProperty("bardic_inspiration_die")]
+        public long BardicInspirationDie { get; set; }
+        [JsonProperty("song_of_rest_die")]
+        public long SongOfRestDie { get; set; }
+        [JsonProperty("magical_secrets_max_5")]
+        public long MagicalSecretsMax5 { get; set; }
+        [JsonProperty("magical_secrets_max_7")]
+        public long MagicalSecretsMax7 { get; set; }
+        [JsonProperty("magical_secrets_max_9")]
+        public long MagicalSecretsMax9 { get; set; }
+        [JsonProperty("channel_divinity_charges")]
+        public long ChannelDivinityCharges { get; set; }
+        [JsonProperty("destroy_undead_cr")]
+        public float DestroyUndeadCr { get; set; }
+        [JsonProperty("wild_shape_max_cr")]
+        public float WildShapeMaxCr { get; set; }
+        [JsonProperty("wild_shape_swim")]
+        public bool WildShapeSwim { get; set; }
+        [JsonProperty("wild_shape_fly")]
+        public bool WildShpeFly { get; set; }
+        [JsonProperty("action_surges")]
+        public int ActionSurges { get; set; }
+        [JsonProperty("indomitable_uses")]
+        public int IndomitableUses { get; set; }
+        [JsonProperty("extra_attacks")]
+        public int ExtraAttacks { get; set; }
+        [JsonProperty("ki_points")]
+        public int KiPoints { get; set; }
+        [JsonProperty("unarmored_movement")]
+        public int UnarmoredMovement { get; set; }
+        [JsonProperty("martial_arts")]
+        public LevelMartialArts martialArts { get; set; }
+        [JsonProperty("aura_range")]
+        public int AuraRange { get; set; }
+        [JsonProperty("favored_enemies")]
+        public int FavoredEnemies { get; set; }
+        [JsonProperty("favored_terrain")]
+        public int FavoredTerrain { get; set; }
+        [JsonProperty("sneak_attack")]
+        public LevelSneakAttack SneakAttack { get; set; }
+        [JsonProperty("sorcery_points")]
+        public long SorceryPoints { get; set; }
+        [JsonProperty("metamagic_known")]
+        public long MetamagicKnown { get; set; }
+        [JsonProperty("creating_spell_slots")]
+        public LevelCreatingSpellSlot[] CreatingSpellSlots { get; set; }
+        [JsonProperty("arcane_recovery_levels")]
+        public int ArcaneRecoveryLevels { get; set; }
+    }
+    public partial class LevelCreatingSpellSlot
+    {
+        [JsonProperty("spell_slot_level")]
+        public long SpellSlotLevel { get; set; }
+
+        [JsonProperty("sorcery_point_cost")]
+        public long SorceryPointCost { get; set; }
+    }
+    public partial class LevelSneakAttack
+    {
+        [JsonProperty("dice_count")]
+        public long DiceCount { get; set; }
+
+        [JsonProperty("dice_value")]
+        public long DiceValue { get; set; }
+    }
+    public partial class LevelMartialArts
+    {
+        [JsonProperty("dice_count")]
+        public long DiceCount { get; set; }
+        [JsonProperty("dice_value")]
+        public long DiceValue { get; set; }
     }
     public class LevelClass
     {
@@ -258,39 +335,45 @@ namespace DnD_Discord_Bot.DnD_Discord_Bot
         public string url { get; set; }
     }
 
-    //Used for resolving Starting Equipment API Calls
-    public class StartingEquipmentClass
+    //Used for Spellcasting API lookups
+    public class SpellcastingRoot
     {
-        public string index { get; set; }
-        public string name { get; set; }
-        public string url { get; set; }
+        [JsonProperty("index")]
+        public string index;
+        [JsonProperty("class")]
+        public SpellcastingClass spellcastingClass;
+        [JsonProperty("level")]
+        public int level;
+        [JsonProperty("spellcasting_ability")]
+        public SpellcastingAbility spellcastingAbility;
+        [JsonProperty("info")]
+        public List<SpellcastingInfo> spellcastingInfo;
+        [JsonProperty("url")]
+        public string url;
     }
-    public class StartingEquipmentEquipment
+    public class SpellcastingClass
     {
-        public string index { get; set; }
-        public string name { get; set; }
-        public string url { get; set; }
+        [JsonProperty("index")]
+        public string index;
+        [JsonProperty("name")]
+        public string name;
+        [JsonProperty("url")]
+        public string url;
     }
-    public class StartingEquipment
+    public class SpellcastingAbility
     {
-        public StartingEquipmentEquipment equipment { get; set; }
-        public int quantity { get; set; }
+        [JsonProperty("index")]
+        public string index;
+        [JsonProperty("name")]
+        public string name;
+        [JsonProperty("url")]
+        public string url;
     }
-    public class StartingEquipmentOption
+    public class SpellcastingInfo
     {
-        public int choose { get; set; }
-        public string type { get; set; }
-        public object from { get; set; }
+        [JsonProperty("name")]
+        public string name;
+        [JsonProperty("desc")]
+        public string[] spellcastingDescription;
     }
-    public class ClassStartingEquipment
-    {
-        public string index { get; set; }
-        public Class @class { get; set; }
-        public List<StartingEquipment> starting_equipment { get; set; }
-        public List<StartingEquipmentOption> starting_equipment_options { get; set; }
-        public string url { get; set; }
-    }
-
-
-
 }

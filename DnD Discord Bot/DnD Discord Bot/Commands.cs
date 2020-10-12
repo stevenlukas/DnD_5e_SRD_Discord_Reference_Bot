@@ -5,6 +5,7 @@ using System.Net.Http;
 using Discord.Commands;
 using DnD_Discord_Bot.DnD_Discord_Bot;
 using Newtonsoft.Json;
+using Google.Apis.Util;
 
 namespace DnD_Discord_Bot.Modules
 {
@@ -605,6 +606,10 @@ namespace DnD_Discord_Bot.Modules
                                     {
                                         levelFeatures += ", ";
                                     }
+                                    else
+                                    {
+                                        levelFeatures += "\n";
+                                    }
                                 }
                             } 
 
@@ -664,13 +669,13 @@ namespace DnD_Discord_Bot.Modules
                                     levelFeatureChoice += $"{level.feature_choices[i].name}\n";
                                 }
                             }
-                            if(level.class_specific != null)
+                            if (level.class_specific != null)
                             {
-                                if(level.class_specific.invocations_known != 0)
+                                if (level.class_specific.invocations_known != 0)
                                 {
                                     levelSpellcasting += $"\nInvocations Known: {level.class_specific.invocations_known}\n";
                                 }
-                                if(level.class_specific.mystic_arcanum_level_6 != 0)
+                                if (level.class_specific.mystic_arcanum_level_6 != 0)
                                 {
                                     levelSpellcasting += $"Mystic Arcanum L6: {level.class_specific.mystic_arcanum_level_6}\n";
                                 }
@@ -685,6 +690,109 @@ namespace DnD_Discord_Bot.Modules
                                 if (level.class_specific.mystic_arcanum_level_9 != 0)
                                 {
                                     levelSpellcasting += $"Mystic Arcanum L9: {level.class_specific.mystic_arcanum_level_9}\n";
+                                }
+                                if (level.class_specific.rageCount != 0)
+                                {
+                                    levelSpellcasting += $"Rage Count: {level.class_specific.rageCount}\n";
+                                }
+                                if (level.class_specific.rageDamageBonus != 0)
+                                {
+                                    levelSpellcasting += $"Rage Damage Bonus: {level.class_specific.rageDamageBonus}\n";
+                                }
+                                if (level.class_specific.brutalCriticalDice != 0)
+                                {
+                                    levelSpellcasting += $"Brutal Critical Dice: {level.class_specific.brutalCriticalDice}\n";
+                                }
+                                if (level.class_specific.BardicInspirationDie != 0)
+                                {
+                                    levelSpellcasting += $"Bardic Inspiratin die: {level.class_specific.BardicInspirationDie}\n";
+                                }
+                                if (level.class_specific.SongOfRestDie != 0)
+                                {
+                                    levelSpellcasting += $"Song of Rest die: {level.class_specific.SongOfRestDie}\n";
+                                }
+                                if (level.class_specific.MagicalSecretsMax5 != 0)
+                                {
+                                    levelSpellcasting += $"Magical Secrets (max L5): {level.class_specific.MagicalSecretsMax5}\n";
+                                }
+                                if (level.class_specific.MagicalSecretsMax7 != 0)
+                                {
+                                    levelSpellcasting += $"Magical Secrets (max L7): {level.class_specific.MagicalSecretsMax7}\n";
+                                }
+                                if (level.class_specific.MagicalSecretsMax9 != 0)
+                                {
+                                    levelSpellcasting += $"Magical Secrets (max L9): {level.class_specific.MagicalSecretsMax9}\n";
+                                }
+                                if (level.class_specific.ChannelDivinityCharges != 0)
+                                {
+                                    levelSpellcasting += $"Channel Divinity Charges: {level.class_specific.ChannelDivinityCharges}\n";
+                                }
+                                if (level.class_specific.DestroyUndeadCr != 0)
+                                {
+                                    levelSpellcasting += $"Destroy Undead CR: {level.class_specific.DestroyUndeadCr}\n";
+                                }
+                                if (level.class_specific.WildShapeMaxCr != 0)
+                                {
+                                    levelSpellcasting += $"Wild Shape Max CR: {level.class_specific.WildShapeMaxCr}\n";
+                                }
+                                if (level.class_specific.WildShapeSwim)
+                                {
+                                    levelSpellcasting += $"Wild shape forms can swim\n";
+                                }
+                                if (level.class_specific.WildShpeFly)
+                                {
+                                    levelSpellcasting += $"Wild shape forms can fly\n";
+                                }
+                                if (level.class_specific.ActionSurges != 0)
+                                {
+                                    levelSpellcasting += $"Action Surges: {level.class_specific.ActionSurges}\n";
+                                }
+                                if (level.class_specific.IndomitableUses != 0)
+                                {
+                                    levelSpellcasting += $"Indomitable Uses: {level.class_specific.invocations_known}\n";
+                                }
+                                if (level.class_specific.ExtraAttacks != 0)
+                                {
+                                    levelSpellcasting += $"Extra Attacks: {level.class_specific.ExtraAttacks}\n";
+                                }
+                                if(level.class_specific.martialArts != null)
+                                {
+                                    levelSpellcasting += $"Martial Arts Dice Type: d{level.class_specific.martialArts.DiceValue}\nMartial Arts Dice Count: {level.class_specific.martialArts.DiceCount}\n";
+                                }
+                                if(level.class_specific.AuraRange != 0)
+                                {
+                                    levelSpellcasting += $"Aura Range: {level.class_specific.AuraRange}\n";
+                                }
+                                if(level.class_specific.FavoredEnemies != 0)
+                                {
+                                    levelSpellcasting += $"Number of Favored Enemies: {level.class_specific.FavoredEnemies}\n";
+                                }
+                                if(level.class_specific.FavoredTerrain != 0)
+                                {
+                                    levelSpellcasting += $"Number of Favored Terrains: {level.class_specific.FavoredTerrain}\n";
+                                }
+                                if(level.class_specific.SneakAttack != null)
+                                {
+                                    levelSpellcasting += $"Sneak Attack Dice Type: d{level.class_specific.SneakAttack.DiceValue}\nSneak Attack Dice Count: {level.class_specific.SneakAttack.DiceCount}\n";
+                                }
+                                if(level.class_specific.SorceryPoints != 0)
+                                {
+                                    levelSpellcasting += $"Sorcery Points: {level.class_specific.SorceryPoints}\n";
+                                }
+                                if(level.class_specific.MetamagicKnown != 0)
+                                {
+                                    levelSpellcasting += $"Metamagic Known: {level.class_specific.MetamagicKnown}\n";
+                                }
+                                if(level.class_specific.CreatingSpellSlots != null)
+                                {
+                                    for (int i = 0; i < level.class_specific.CreatingSpellSlots.Length; i++)
+                                    {
+                                        levelSpellcasting += $"Created Spell Slot Level: {level.class_specific.CreatingSpellSlots[i].SpellSlotLevel}\nSorcery Point Cost: {level.class_specific.CreatingSpellSlots[i].SorceryPointCost}\n";
+                                    }
+                                }
+                                if(level.class_specific.ArcaneRecoveryLevels != 0)
+                                {
+                                    levelSpellcasting += $"Arcane Recovery Levels: {level.class_specific.ArcaneRecoveryLevels}\n";
                                 }
                             }
 
@@ -706,9 +814,106 @@ namespace DnD_Discord_Bot.Modules
                             break;
 
                         case "starting equipment":
+                            //found that dnd5eapi.co has an invalid JSON for starting equipment. If the equipment has two parts, there is an invalid JSON array. Info must be input manually
+                            string startingEquipmentResponse = null;
+                            switch(classObject.name.ToLower())
+                            {
+                                case "barbarian":
+                                    startingEquipmentResponse += $"Class: Barbarian\nStarting Equipment: Explorer's Pack (x1), Javelin (x4)\nChoose 1: Great Axe (x1), Any Martial Melee Weapon (x1)\nChoose 1: Handaxe (x2), Any Simple Weapon (x1)";
+                                    await ReplyAsync(startingEquipmentResponse);
+                                    break;
+
+                                case "bard":
+                                    startingEquipmentResponse += $"Class: Bard\nStarting Equipment: Leather (x1), Dagger (x1)\nChoose 1: Rapier (x1), Longsword (x1), Any Simple Weapon (x1)\nChoose 1: Diplomat's Pack (x1), Entertainer's Pack (X1)\nChoose 1: Lute (x1), Any Musical Instrument (x1)";
+                                    await ReplyAsync(startingEquipmentResponse);
+                                    break;
+
+                                case "cleric":
+                                    startingEquipmentResponse += $"Class: Cleric\nStarting Equipment: Shield (x1)\nChoose 1: Mace (x1), Warhammer (x1)\nChoose 1: Scale Mail (x1), Leather (x1), Chain Mail (x1)\nChoose 1: Light Crossbow (x1) Crossbow Bolt (x20), Any Simple Weapon (x1)\nChoose 1: Priest's Pack (x1), Explorer's Pack (x1)\nChoose 1 Holy Symbol";
+                                    await ReplyAsync(startingEquipmentResponse);
+                                    break;
+
+                                case "druid":
+                                    startingEquipmentResponse += $"Class: Druid\nStarting Equipment: Leather (x1), Explorer's Pack (x1)\nChoose 1: Shield (x1), Any Simple Weapon (x1)\nChoose 1: Scimitar (x1), Any Simple Weapon (x1)\nChoose 1 Druidic Focus";
+                                    await ReplyAsync(startingEquipmentResponse);
+                                    break;
+
+                                case "fighter":
+                                    startingEquipmentResponse += $"Class: Fighter\nChoose 1: Chain Mail (x1), Leather (x1) Longbow (x1) and Arrows (x20)\nChoose 1: Shield (x1) and any Martial Weapon (x1), any 2 Martial Weapons\nChoose 1: Handaxe (x2), Light Crossbow (x1) and crossbow bolt(x20)\nChoose 1: Dungeoneer's Pack (x1), Explorer's Pack (x1)";
+                                    await ReplyAsync(startingEquipmentResponse);
+                                    break;
+
+                                case "monk":
+                                    startingEquipmentResponse += $"Class: Monk\nStarting Equipment: Dart (x10)\nChoose 1: Shortsword (x1), any Simple Weapon (x1)\nChoose 1: Dungeoneer's Pack (x1), Explorer's Pack (x1)";
+                                    await ReplyAsync(startingEquipmentResponse);
+                                    break;
+
+                                case "paladin":
+                                    startingEquipmentResponse += $"Class: Paladin\nStarting Equipment: Chain Mail (x1)\nChoose 1: Shield (x1) and any Martial Weapon (x1), any 2 Martial Weapons\nChoose 1: Javelin (x5), any Simple Weapon (x1)\nChoose 1: Priest's Pack (x1), Explorer's Pack (x1)\nChoose 1 Holy Symbol";
+                                    await ReplyAsync(startingEquipmentResponse);
+                                    break;
+
+                                case "ranger":
+                                    startingEquipmentResponse += $"Class: Ranger\nStarting Equipment: Longbow (x1) and Arrows (x20)\nChoose 1: Scale Mail (x1), Leather (x1)\nChoose 1: Shortsword (x2), any 2 Simple Weapons\nChoose 1: Dungeoneer's Pack (x1), Explorer's Pack (x1)";
+                                    await ReplyAsync(startingEquipmentResponse);
+                                    break;
+
+                                case "rogue":
+                                    startingEquipmentResponse += $"Class: Rogue\nStarting Equipment: Leather (x1), Dagger (x2), Thieve's Tools (x1)\nChoose 1: Rapier (x1), Shortsword (x1)\nChoose 1: Shortsword (x1), Shortbow (x1) and Arrows (x20)\nChoose 1: Burglar's Pack (x1), Dungeoneer's Pack (x1), Explorer's Pack (x1)";
+                                    await ReplyAsync(startingEquipmentResponse);
+                                    break;
+
+                                case "sorcerer":
+                                    startingEquipmentResponse += $"Class: Sorcerer\nStarting Equipment: Dagger (x2)\nChoose 1: Light Crossbow (x1) and Bolts (x20), any 1 Simple Weapon\nChoose 1: Component Pouch (x1), Arcane Focus (x1)\nChoose 1: Dungeoneer's Pack (x1), Explorer's Pack (x1)";
+                                    await ReplyAsync(startingEquipmentResponse);
+                                    break;
+
+                                case "warlock":
+                                    startingEquipmentResponse += $"Class: Warlock\nStarting Equipment: Dagger (x2), Leather (x1)\nChoose 1: Light Crossbow (x1) and Bolts (x20), any 1 Simple Weapon\nChoose 1: Component Pouch (x1), Arcane Focus (x1)\nChoose 1: Scholar's Pack (x1), Dungeoneer's Pack (x1)\nChoose any 1 Simple Weapon";
+                                    await ReplyAsync(startingEquipmentResponse);
+                                    break;
+
+                                case "wizard":
+                                    startingEquipmentResponse += $"Class: Wizard\nStarting Equipment: Spellbook (x1)\nChoose 1: Dagger (x1), Quarterstaff (x1)\nChoose 1: Component Pouch (x1), Arcane Focus (x1)\nChoose 1: Scholar's Pack (x1), Dungeoneer's Pack (x1)";
+                                    await ReplyAsync(startingEquipmentResponse);
+                                    break;
+
+                                default:
+                                    await ReplyAsync("There is no starting equipment programmed for this class at this time");
+                                    break;
+                            }
                             break;
 
                         case "spellcasting":
+                            string spellcastingLookup = _dnd5eURL + "/api/spellcasting";
+                            spellcastingLookup = await _dndClient.GetStringAsync(spellcastingLookup);
+                            if(spellcastingLookup.Contains(classObject.name) || spellcastingLookup.Contains(classObject.name.ToLower()))
+                            {
+                                spellcastingLookup = _dnd5eURL + "/api/spellcasting/" + classObject.name;
+                                spellcastingLookup = spellcastingLookup.ToLower();
+                                spellcastingLookup = await _dndClient.GetStringAsync(spellcastingLookup);
+                                SpellcastingRoot spellcastingObject = JsonConvert.DeserializeObject<SpellcastingRoot>(spellcastingLookup);
+
+                                string spellcastingHeader = $"Class: {spellcastingObject.spellcastingClass.name}\nSpellcasting available at level {spellcastingObject.level}\nSpellcasting Ability: {spellcastingObject.spellcastingAbility.name}\n";
+                                
+                                for(int i = 0; i < spellcastingObject.spellcastingInfo.Count; i++)
+                                {
+                                    if (i == 0)
+                                    {
+                                        spellcastingHeader += $"{spellcastingObject.spellcastingInfo[i].name}: ";
+                                        await ReplyAsync(spellcastingHeader);
+                                    }
+                                    foreach(string desc in spellcastingObject.spellcastingInfo[i].spellcastingDescription)
+                                    {
+                                        await ReplyAsync(desc);
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                await ReplyAsync($"There is no listed spellcasting for the class {classObject.name}");
+                            }
+
                             break;
 
                         default:
@@ -761,206 +966,6 @@ namespace DnD_Discord_Bot.Modules
                 }
             }
         }
-        /*
-        [Command("race")]
-        public async Task RaceLookup([Remainder] string race = null)
-        {
-            string raceLookup;
-            string raceTraits = null;
-            string raceProficiencies = null;
-            string raceSubraces = null;
-            string[] apiCallResult;
 
-            if (race == null)
-            {
-            }
-            else
-            {
-                raceLookup = $"{_dnd5eURL}races/?name={race}";
-                _dndClient.DefaultRequestHeaders.Add("User-Agent", "C# console program");
-                raceLookup = await _dndClient.GetStringAsync($"{raceLookup}");
-                APIResults apiResult = JsonConvert.DeserializeObject<APIResults>(raceLookup);
-
-                for (int i = 0; i < apiResult.results.Length; i++)
-                {
-                    if (String.Equals(race, apiResult.results[i].name, StringComparison.OrdinalIgnoreCase))
-                    {
-                        raceLookup = apiResult.results[i].url;
-                        break;
-                    }
-                }
-                raceLookup = await _dndClient.GetStringAsync($"{raceLookup}");
-
-                if (raceLookup.Contains("â€™"))
-                {
-                    raceLookup = raceLookup.Replace("â€™", "'");
-                }
-
-                Race raceObject = JsonConvert.DeserializeObject<Race>(raceLookup);
-
-                for (int i = 0; i < raceObject.startingProficiencies.Length; i++)
-                {
-                    raceProficiencies = raceProficiencies + "\n" + raceObject.startingProficiencies[i].name;
-                }
-
-                for (int i = 0; i < raceObject.traits.Length; i++)
-                {
-                    raceTraits = raceTraits + "\n" + raceObject.traits[i].name;
-                }
-
-                for (int i = 0; i < raceObject.subraces.Length; i++)
-                {
-                    raceSubraces = raceSubraces + "\n" + raceObject.subraces[i].name;
-                }
-
-                await ReplyAsync($"Race: {raceObject.name}\n\nSpeed: {raceObject.speed}\n\nAge: {raceObject.age}\n\nAlignment: {raceObject.alignment}\n");
-                await ReplyAsync($"­\nSize: {raceObject.size}\n{raceObject.sizeDescription}\n\nLanguages: {raceObject.languageDesc}\n");
-                if (raceTraits != null)
-                {
-                    await ReplyAsync($"\nTraits:{raceTraits}\n");
-                }
-                if (raceProficiencies != null)
-                {
-                    await ReplyAsync($"\nProficiencies: {raceProficiencies}\n");
-                }
-                if (raceSubraces != null)
-                {
-                    await ReplyAsync($"\nSubraces:{raceSubraces}");
-                }
-            }
-        }
-        */
-        /*
-        [Command("subclass")]
-        public async Task SubclassLookup(string subclass = null, [Remainder]string drillDown = null)
-        {
-            string subclassLookup;
-            string[] apiCallResult;
-            string fileLocation = @"C:\Bots\Lists\DnD_Subclass_List.txt";
-
-            if (subclass == null)
-            {
-                var subclassList = new List<string>();
-                subclassLookup = $"{_dnd5eURL}subclasses";
-
-                _dndClient.DefaultRequestHeaders.Add("User-Agent", "C# console program");
-
-                subclassLookup = await _dndClient.GetStringAsync($"{subclassLookup}");
-                //Console.WriteLine("Checkpoint");
-
-                apiCallResult = subclassLookup.Split("name");
-                //Console.WriteLine("Checkpoint");
-
-                for (int i = 1; i != apiCallResult.Length; i++)
-                {
-                    subclassLookup = apiCallResult[i];
-                    string[] nameSeparation = subclassLookup.Split('"');
-                    subclassList.Add(nameSeparation[2]);
-                }
-
-                foreach (string languageName in subclassList)
-                {
-                    File.WriteAllLines(fileLocation, subclassList);
-                }
-
-                var embed = new EmbedBuilder();
-                var embedList = embed.Build();
-
-                //await ReplyAsync(embed: embedList);
-                await Context.Channel.SendFileAsync(fileLocation);
-            }
-            else
-            {
-                if (drillDown == null)
-                {
-                    subclass = subclass.ToLower();
-                    subclassLookup = $"{_dnd5eURL}subclasses";
-                    _dndClient.DefaultRequestHeaders.Add("User-Agent", "C# console program");
-                        //Console.WriteLine(languageLookup);
-                        
-                    subclassLookup = await _dndClient.GetStringAsync($"{subclassLookup}");
-                        //Console.WriteLine(subclassLookup);
-                    APIResults apiResult = JsonConvert.DeserializeObject<APIResults>(subclassLookup);
-                        //Console.WriteLine(languageLookup);
-                        //Console.WriteLine(apiResult.results.Length);
-
-                    for (int i = 0; i < apiResult.results.Length; i++)
-                    {
-                            //Console.WriteLine(apiResult.results[i].name);
-                            
-                        if (String.Equals(subclass, apiResult.results[i].name, StringComparison.OrdinalIgnoreCase))
-                        {
-                            subclass = apiResult.results[i].url;
-                                //Console.WriteLine(subclass);
-                            break;
-                        }
-                    }
-                        //Console.WriteLine("Here?");
-                        
-                    subclass = await _dndClient.GetStringAsync($"{subclass}");
-                    Subclass subclassObject = JsonConvert.DeserializeObject<Subclass>(subclass);
-                        //Console.WriteLine(subclassObject.Class.name);
-                        //Console.WriteLine(subclassObject.name);
-                    await ReplyAsync($"{subclassObject.name}\n\n");
-                        //Console.WriteLine("No");
-                    foreach (string description in subclassObject.desc)
-                    {
-                            //Console.WriteLine(description);
-                        await ReplyAsync($"{description}");
-                            
-                    }
-                    for (int i = 0; i < subclassObject.features.Length; i++)
-                    {
-                            //Console.WriteLine(subclassObject.features[i].name);
-                            //await ReplyAsync($"{subclassObject.features[i].name}");
-                            //Console.WriteLine(subclassObject.features[i].url);
-                        subclassLookup = await _dndClient.GetStringAsync(subclassObject.features[i].url);
-                        Feature subclassFeature = JsonConvert.DeserializeObject<Feature>(subclassLookup);
-                            //Console.WriteLine(subclassFeature.name);
-                        await ReplyAsync($"\n\nSubclass Feature: {subclassFeature.name}");
-                        //Console.WriteLine(subclassFeature.level);
-                        await ReplyAsync($"\n\nObtained at Level {subclassFeature.level}\n\n");
-                        foreach (string description in subclassFeature.desc)
-                        {
-                                //Console.WriteLine(description);
-                            await ReplyAsync($"{description}");
-                        }
-                    }
-                    //Druids likely have a different class makeup than other classes. Check what the results should look like for Clerics and Warlocks, then Druids.
-
-                        //Console.WriteLine(subclassObject.index);
-
-                        if (subclassObject.spells != null)
-                    {
-                        await ReplyAsync("\n\nSubclass Spells\n\n");
-                        Console.WriteLine(subclassObject.spells.Length);
-                        for (int i = 0; i < subclassObject.spells.Length; i++)
-                        {
-                                //Console.WriteLine($"Spell acquired at Level {subclassObject.spells[i].levelAcquired}");
-                            Console.WriteLine($"Spell Prerequisites: {subclassObject.spells[i].prerequisites.Length}");
-                            //await ReplyAsync($"Spell Prerequisites: {subclassObject.spells[i].prerequisites.Length}");
-                            for (int j = 0; j < subclassObject.spells[i].prerequisites.Length; j++)
-                            {
-                                Console.WriteLine(subclassObject.spells[i].prerequisites[j].name);
-                                await ReplyAsync($"\n\n{subclassObject.spells[i].prerequisites[j].name}");
-                            }
-                            Console.WriteLine(subclassObject.spells[i].spell.name);
-                            await ReplyAsync($"Spell: {subclassObject.spells[i].spell.name}");
-                            Console.WriteLine(subclassObject.spells[i].spellAcquisitionMethod.name);
-                            switch (subclassObject.spells[i].spellAcquisitionMethod.name)
-                            {
-                                case "level":
-                                   await ReplyAsync($"Spell acquired at Level {subclassObject.spells[i].levelAcquired}");
-                                    break;
-                                default:
-                                    Console.WriteLine("Case not set");
-                                    break;
-                            }
-                            await ReplyAsync("\n");
-                        }
-                    }
-                }
-            }
-        }*/
     }
 }
