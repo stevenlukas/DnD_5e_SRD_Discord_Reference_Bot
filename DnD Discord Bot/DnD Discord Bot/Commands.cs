@@ -30,7 +30,7 @@ namespace DnD_Discord_Bot.Modules
             int diceType = int.Parse(rollArray[1]);
             int abilityModifier = 0;
             int rollTotal = 0;
-            int[] rollResult = new int[rollCount+1];
+            int[] rollResult = new int[rollCount + 1];
             string modifierType = null;
             string resultOutput = null;
 
@@ -39,12 +39,12 @@ namespace DnD_Discord_Bot.Modules
 
             Random rnd = new Random();
 
-            if(rollInput.Contains("-"))
+            if (rollInput.Contains("-"))
             {
                 modifierType = "-";
                 abilityModifier = int.Parse(rollArray[2]);
             }
-            else if(rollInput.Contains("+"))
+            else if (rollInput.Contains("+"))
             {
                 modifierType = "+";
                 abilityModifier = int.Parse(rollArray[2]);
@@ -55,12 +55,12 @@ namespace DnD_Discord_Bot.Modules
             {
                 //sets random number value
                 rollResult[i] = rnd.Next(1, (diceType + 1));
-                
+
                 //applies adv/dis reroll and sets initial final value
                 if (modifier == "advantage" || modifier == "adv" && rollCount == 1 && diceType == 20)
                 {
                     rollResult[1] = rnd.Next(1, (diceType + 1));
-                    if(rollResult[1] > rollResult[0])
+                    if (rollResult[1] > rollResult[0])
                     {
                         rollTotal = rollResult[1];
                     }
@@ -101,14 +101,14 @@ namespace DnD_Discord_Bot.Modules
                 }
                 else
                 {
-                        resultOutput += $"[{rollResult[i]}]";
-                        rollTotal += rollResult[i];
-                }                
+                    resultOutput += $"[{rollResult[i]}]";
+                    rollTotal += rollResult[i];
+                }
             }
 
             if (diceType == 20 && rollCount == 1)
             {
-                if (rollResult[0] == 20 || rollResult[1] == 20 )
+                if (rollResult[0] == 20 || rollResult[1] == 20)
                 {
                     critSuccess = true;
                 }
@@ -130,7 +130,7 @@ namespace DnD_Discord_Bot.Modules
                     rollTotal -= abilityModifier;
                 }
             }
-            
+
 
             //output result [roll+mod]
             //return result
@@ -148,11 +148,11 @@ namespace DnD_Discord_Bot.Modules
                 {
                     await ReplyAsync($"{rollTotal} {resultOutput}");
                 }
-                else if(abilityModifier != 0)
+                else if (abilityModifier != 0)
                 {
                     await ReplyAsync($"{rollTotal} {resultOutput} {modifierType}{abilityModifier}");
                 }
-                else if(rollCount > 1)
+                else if (rollCount > 1)
                 {
                     await ReplyAsync($"{rollTotal} {resultOutput}");
                 }
@@ -193,7 +193,7 @@ namespace DnD_Discord_Bot.Modules
                     }
                 }
 
-                if(!validSpell)
+                if (!validSpell)
                 {
                     await ReplyAsync($"The spell name provided, {spell}, was not found");
                 }
@@ -211,12 +211,12 @@ namespace DnD_Discord_Bot.Modules
 
                     //spell has been converted, and each portion is being prepped for display
                     string spellHeader = $"Name: {spellObject.name}\nLevel: {spellObject.level}\nSchool: {spellObject.school.name}";
-                    
-                    if(spellObject.ritual)
+
+                    if (spellObject.ritual)
                     {
-                        spellHeader +="\nThis spell can be cast as a ritual (R)";
+                        spellHeader += "\nThis spell can be cast as a ritual (R)";
                     }
-                    if(spellObject.concentration)
+                    if (spellObject.concentration)
                     {
                         spellHeader += "\nThis spell requires concentration (C)";
                     }
@@ -224,15 +224,15 @@ namespace DnD_Discord_Bot.Modules
                     spellHeader += "\n\n";
 
                     await ReplyAsync(spellHeader);
-                    
-                    foreach(string desc in spellObject.desc)
+
+                    foreach (string desc in spellObject.desc)
                     {
                         await ReplyAsync($"{desc}");
                     }
-                    if(spellObject.higher_level != null)
+                    if (spellObject.higher_level != null)
                     {
                         string higherLevel = "\nCasting with higher levels:\n";
-                        foreach(string higherLevelDesc in spellObject.higher_level)
+                        foreach (string higherLevelDesc in spellObject.higher_level)
                         {
                             higherLevel += $"{higherLevelDesc}\n";
                         }
@@ -240,7 +240,7 @@ namespace DnD_Discord_Bot.Modules
                     }
 
                     string additionalData = "\nComponents: ";
-                    foreach(string component in spellObject.components)
+                    foreach (string component in spellObject.components)
                     {
                         additionalData += $"{component} ";
                     }
@@ -346,12 +346,12 @@ namespace DnD_Discord_Bot.Modules
 
                 string abilityHeader = $"Name: {abilityScoreObject.full_name}\nAbbreviation: {abilityScoreObject.name}\n";
                 string abilityDesc = "\n";
-                foreach(string desc in abilityScoreObject.desc)
+                foreach (string desc in abilityScoreObject.desc)
                 {
                     abilityDesc += $"{desc}\n";
                 }
                 string abilitySkill = "\nSkills:\n";
-                foreach(AbilitySkill skill in abilityScoreObject.skills)
+                foreach (AbilitySkill skill in abilityScoreObject.skills)
                 {
                     abilitySkill += $"{skill.name}\n";
                 }
@@ -397,7 +397,7 @@ namespace DnD_Discord_Bot.Modules
 
                 string skillHeader = $"Name: {skillObject.name}\nAbility: {skillObject.ability_score.name}\n";
                 string skillDesc = "\n";
-                foreach(string desc in skillObject.desc)
+                foreach (string desc in skillObject.desc)
                 {
                     skillDesc += $"{desc}\n";
                 }
@@ -412,16 +412,16 @@ namespace DnD_Discord_Bot.Modules
 
             if (proficiency == null)
             {
-                await ReplyAsync( $"You can reference any Proficiency in the DnD 5e SRD. {_dnd5eURL}/api/proficiencies");
+                await ReplyAsync($"You can reference any Proficiency in the DnD 5e SRD. {_dnd5eURL}/api/proficiencies");
             }
             else
             {
                 proficiency = proficiency.ToLower();
-                if(proficiency.Contains(' '))
+                if (proficiency.Contains(' '))
                 {
                     proficiency.Replace(' ', '-');
                 }
-                if(proficiency.Contains('\''))
+                if (proficiency.Contains('\''))
                 {
                     proficiency.Remove('\'');
                 }
@@ -496,12 +496,12 @@ namespace DnD_Discord_Bot.Modules
                     languageSpeakers += $"{speaker}\n";
                 }
 
-                if(languageObject.desc != null)
+                if (languageObject.desc != null)
                 {
                     languageHeader += languageDesc;
                 }
 
-                if(languageObject.typical_speakers != null)
+                if (languageObject.typical_speakers != null)
                 {
                     languageHeader += languageSpeakers;
                 }
@@ -518,12 +518,12 @@ namespace DnD_Discord_Bot.Modules
             {
                 await ReplyAsync($"You can reference any class in the DnD 5e SRD. {_dnd5eURL}/api/classes");
             }
-            else 
+            else
             {
                 classes = classes.ToLower();
                 classLookup = $"{_dnd5eURL}/api/classes/";
                 _dndClient.DefaultRequestHeaders.Add("User-Agent", "C# console program");
-                
+
                 classLookup = await _dndClient.GetStringAsync($"{classLookup}");
                 APIResults apiResult = JsonConvert.DeserializeObject<APIResults>(classLookup);
 
@@ -531,13 +531,13 @@ namespace DnD_Discord_Bot.Modules
                 {
                     if (String.Equals(classes, apiResult.results[i].name, StringComparison.OrdinalIgnoreCase))
                     {
-                        classLookup =_dnd5eURL + apiResult.results[i].url;
+                        classLookup = _dnd5eURL + apiResult.results[i].url;
                         break;
                     }
                 }
 
                 classLookup = await _dndClient.GetStringAsync($"{classLookup}");
-                if (classLookup.Contains("â€™"));
+                if (classLookup.Contains("â€™")) ;
                 {
                     classLookup = classLookup.Replace("â€™", "'");
                 }
@@ -548,7 +548,7 @@ namespace DnD_Discord_Bot.Modules
                 {
                     string[] commandResults;
                     string classLevel = null;
-                    if(drillDown.Contains("level"))
+                    if (drillDown.Contains("level"))
                     {
                         commandResults = drillDown.Split(" ");
                         drillDown = "level";
@@ -557,7 +557,7 @@ namespace DnD_Discord_Bot.Modules
                     switch (drillDown)
                     {
                         case "spells":
-                            if(classObject.spellcasting != null)
+                            if (classObject.spellcasting != null)
                             {
                                 classLookup = _dnd5eURL + classObject.spells;
                                 classLookup = await _dndClient.GetStringAsync($"{classLookup}");
@@ -590,13 +590,13 @@ namespace DnD_Discord_Bot.Modules
 
                             //Build general header
                             levelHeader = $"Class: {level.@class.name}\nLevel: {level.level}\nProficiency Bonus: {level.prof_bonus}";
-                            if(level.ability_score_bonuses != 0)
+                            if (level.ability_score_bonuses != 0)
                             {
                                 levelHeader += $"\nAbility Score Bonuses: {level.ability_score_bonuses}";
                             }
 
                             //Build features
-                            if(level.features.Count != 0)
+                            if (level.features.Count != 0)
                             {
                                 levelFeatures = "\nFeatures: ";
                                 for (int i = 0; i < level.features.Count; i++)
@@ -611,13 +611,13 @@ namespace DnD_Discord_Bot.Modules
                                         levelFeatures += "\n";
                                     }
                                 }
-                            } 
+                            }
 
                             //Build spellcasting for casters
-                            if(level.spellcasting != null)
+                            if (level.spellcasting != null)
                             {
                                 levelSpellcasting += "\n";
-                                if(level.spellcasting.cantrips_known != 0)
+                                if (level.spellcasting.cantrips_known != 0)
                                 {
                                     levelSpellcasting += $"Cantrips Known: {level.spellcasting.cantrips_known}\n";
                                 }
@@ -755,57 +755,57 @@ namespace DnD_Discord_Bot.Modules
                                 {
                                     levelSpellcasting += $"Extra Attacks: {level.class_specific.ExtraAttacks}\n";
                                 }
-                                if(level.class_specific.martialArts != null)
+                                if (level.class_specific.martialArts != null)
                                 {
                                     levelSpellcasting += $"Martial Arts Dice Type: d{level.class_specific.martialArts.DiceValue}\nMartial Arts Dice Count: {level.class_specific.martialArts.DiceCount}\n";
                                 }
-                                if(level.class_specific.AuraRange != 0)
+                                if (level.class_specific.AuraRange != 0)
                                 {
                                     levelSpellcasting += $"Aura Range: {level.class_specific.AuraRange}\n";
                                 }
-                                if(level.class_specific.FavoredEnemies != 0)
+                                if (level.class_specific.FavoredEnemies != 0)
                                 {
                                     levelSpellcasting += $"Number of Favored Enemies: {level.class_specific.FavoredEnemies}\n";
                                 }
-                                if(level.class_specific.FavoredTerrain != 0)
+                                if (level.class_specific.FavoredTerrain != 0)
                                 {
                                     levelSpellcasting += $"Number of Favored Terrains: {level.class_specific.FavoredTerrain}\n";
                                 }
-                                if(level.class_specific.SneakAttack != null)
+                                if (level.class_specific.SneakAttack != null)
                                 {
                                     levelSpellcasting += $"Sneak Attack Dice Type: d{level.class_specific.SneakAttack.DiceValue}\nSneak Attack Dice Count: {level.class_specific.SneakAttack.DiceCount}\n";
                                 }
-                                if(level.class_specific.SorceryPoints != 0)
+                                if (level.class_specific.SorceryPoints != 0)
                                 {
                                     levelSpellcasting += $"Sorcery Points: {level.class_specific.SorceryPoints}\n";
                                 }
-                                if(level.class_specific.MetamagicKnown != 0)
+                                if (level.class_specific.MetamagicKnown != 0)
                                 {
                                     levelSpellcasting += $"Metamagic Known: {level.class_specific.MetamagicKnown}\n";
                                 }
-                                if(level.class_specific.CreatingSpellSlots != null)
+                                if (level.class_specific.CreatingSpellSlots != null)
                                 {
                                     for (int i = 0; i < level.class_specific.CreatingSpellSlots.Length; i++)
                                     {
                                         levelSpellcasting += $"Created Spell Slot Level: {level.class_specific.CreatingSpellSlots[i].SpellSlotLevel}\nSorcery Point Cost: {level.class_specific.CreatingSpellSlots[i].SorceryPointCost}\n";
                                     }
                                 }
-                                if(level.class_specific.ArcaneRecoveryLevels != 0)
+                                if (level.class_specific.ArcaneRecoveryLevels != 0)
                                 {
                                     levelSpellcasting += $"Arcane Recovery Levels: {level.class_specific.ArcaneRecoveryLevels}\n";
                                 }
                             }
 
                             levelResults = levelHeader;
-                            if(levelFeatures != null)
+                            if (levelFeatures != null)
                             {
                                 levelResults += levelFeatures;
                             }
-                            if(levelFeatureChoice != null)
+                            if (levelFeatureChoice != null)
                             {
                                 levelResults += levelFeatureChoice;
                             }
-                            if(levelSpellcasting != null)
+                            if (levelSpellcasting != null)
                             {
                                 levelResults += levelSpellcasting;
                             }
@@ -816,7 +816,7 @@ namespace DnD_Discord_Bot.Modules
                         case "starting equipment":
                             //found that dnd5eapi.co has an invalid JSON for starting equipment. If the equipment has two parts, there is an invalid JSON array. Info must be input manually
                             string startingEquipmentResponse = null;
-                            switch(classObject.name.ToLower())
+                            switch (classObject.name.ToLower())
                             {
                                 case "barbarian":
                                     startingEquipmentResponse += $"Class: Barbarian\nStarting Equipment: Explorer's Pack (x1), Javelin (x4)\nChoose 1: Great Axe (x1), Any Martial Melee Weapon (x1)\nChoose 1: Handaxe (x2), Any Simple Weapon (x1)";
@@ -887,7 +887,7 @@ namespace DnD_Discord_Bot.Modules
                         case "spellcasting":
                             string spellcastingLookup = _dnd5eURL + "/api/spellcasting";
                             spellcastingLookup = await _dndClient.GetStringAsync(spellcastingLookup);
-                            if(spellcastingLookup.Contains(classObject.name) || spellcastingLookup.Contains(classObject.name.ToLower()))
+                            if (spellcastingLookup.Contains(classObject.name) || spellcastingLookup.Contains(classObject.name.ToLower()))
                             {
                                 spellcastingLookup = _dnd5eURL + "/api/spellcasting/" + classObject.name;
                                 spellcastingLookup = spellcastingLookup.ToLower();
@@ -895,15 +895,15 @@ namespace DnD_Discord_Bot.Modules
                                 SpellcastingRoot spellcastingObject = JsonConvert.DeserializeObject<SpellcastingRoot>(spellcastingLookup);
 
                                 string spellcastingHeader = $"Class: {spellcastingObject.spellcastingClass.name}\nSpellcasting available at level {spellcastingObject.level}\nSpellcasting Ability: {spellcastingObject.spellcastingAbility.name}\n";
-                                
-                                for(int i = 0; i < spellcastingObject.spellcastingInfo.Count; i++)
+
+                                for (int i = 0; i < spellcastingObject.spellcastingInfo.Count; i++)
                                 {
                                     if (i == 0)
                                     {
                                         spellcastingHeader += $"{spellcastingObject.spellcastingInfo[i].name}: ";
                                         await ReplyAsync(spellcastingHeader);
                                     }
-                                    foreach(string desc in spellcastingObject.spellcastingInfo[i].spellcastingDescription)
+                                    foreach (string desc in spellcastingObject.spellcastingInfo[i].spellcastingDescription)
                                     {
                                         await ReplyAsync(desc);
                                     }
@@ -966,6 +966,138 @@ namespace DnD_Discord_Bot.Modules
                 }
             }
         }
+        [Command("condition")]
+        public async Task ConditionLookup([Remainder] string condition = null)
+        {
+            string conditionLookup = null;
+            if (condition == null)
+            {
+                await ReplyAsync("You can lookup any condition listed in the DnD 5e SRD. You can view the condition list at dnd5eapi.co/api/conditions");
+            }
+            else
+            {
+                conditionLookup = $"{_dnd5eURL}/api/conditions";
+                conditionLookup = await _dndClient.GetStringAsync(conditionLookup.ToLower());
+                if(conditionLookup.ToLower().Contains(condition.ToLower()))
+                {
+                    conditionLookup = $"{_dnd5eURL}/api/conditions/{condition}".ToLower();
+                    conditionLookup = await _dndClient.GetStringAsync(conditionLookup);
+                    ConditionRoot conditionObject = JsonConvert.DeserializeObject<ConditionRoot>(conditionLookup);
 
+                    string conditionHeader = $"Condition: {conditionObject.name}\n";
+                    foreach(string desc in conditionObject.desc)
+                    {
+                        conditionHeader += $"{desc}\n";
+                    }
+                    conditionHeader = conditionHeader.Replace("- ", "");
+                    await ReplyAsync(conditionHeader);
+                }
+                else
+                {
+                    await ReplyAsync($"{condition} is not found in the DnD 5e SRD");
+                }
+            }
+        }
+        [Command("damage")]
+        public async Task DamageLookup([Remainder] string damage = null)
+        {
+            if(damage == null)
+            {
+                await ReplyAsync($"You can reference any dmaage type in the DnD 5e SRD. You can view the list at dnd5eapi.co/api/damage-types");
+            }
+            else
+            {
+                string damageLookup = $"{_dnd5eURL}/api/damage-types";
+                damageLookup = await _dndClient.GetStringAsync(damageLookup);
+                if (damageLookup.Contains(damage.ToLower()))
+                {
+                    damageLookup = $"{_dnd5eURL}/api/damage-types/{damage}".ToLower();
+                    damageLookup = await _dndClient.GetStringAsync(damageLookup);
+                    DamageTypeRoot damageType = JsonConvert.DeserializeObject<DamageTypeRoot>(damageLookup);
+
+                    string damageHeader = $"Damage Type: {damageType.name}\n";
+                    foreach(string desc in damageType.desc)
+                    {
+                        damageHeader += $"{desc}\n";
+                    }
+
+                    damageHeader = damageHeader.Replace("- ", "");
+                    ReplyAsync(damageHeader);
+                }
+                else
+                {
+                    await ReplyAsync($"{damage} is not found in the DnD 5e SRD");
+                }
+            }
+        }
+        [Command("equipment")]
+        public async Task EquipmentLookup([Remainder]string equipment = null)
+        {
+            string equipmentLookup = null;
+            if(equipment == null)
+            {
+                await ReplyAsync("You can reference any item of equipment in the DnD 5e SRD");
+            }
+            else
+            {
+                equipmentLookup = $"{_dnd5eURL}/api/equipment";
+                equipmentLookup = await _dndClient.GetStringAsync(equipmentLookup.ToLower());
+                if(equipmentLookup.Contains(equipment.ToLower()))
+                {
+                    equipmentLookup = $"{_dnd5eURL}/api/equpment/{equipment.Replace(" ", "-")}".ToLower();
+                    equipmentLookup = await _dndClient.GetStringAsync(equipmentLookup);
+                    EquipmentRoot equipmentObject = JsonConvert.DeserializeObject<EquipmentRoot>(equipmentLookup);
+
+                    string equipmentHeader = $"Name: {equipmentObject.name}\nEquipment Category: {equipmentObject.equipmentCategory.name}\nGear Type: {equipmentObject.gearCategory.name}\nCost: {equipmentObject.cost.quantity} {equipmentObject.cost.unit}\nWeight: {equipmentObject.weight} lb";
+                    if(equipmentObject.desc != null)
+                    {
+                        foreach(string desc in equipmentObject.desc)
+                        {
+                            equipmentHeader += desc;
+                        }
+                    }
+                    await ReplyAsync(equipmentHeader);
+                }
+                else
+                {
+                    await ReplyAsync($"{equipment} is not found in the DnD 5e SRD");
+                }
+            }
+        }
+        [Command("feature")]
+        public async Task FeatureLookup([Remainder] string feature = null)
+        {
+
+        }
+        [Command("school")]
+        public async Task MagicSchoolLookup([Remainder] string magicSchool = null)
+        {
+
+        }
+        [Command("monster")]
+        public async Task MonsterLookup([Remainder] string monster = null)
+        {
+
+        }
+        [Command("race")]
+        public async Task RaceLookup([Remainder] string race = null)
+        {
+
+        }
+        [Command("subclass")]
+        public async Task SubclassLookup([Remainder] string subclass = null)
+        {
+
+        }
+        [Command("trait")]
+        public async Task TraitLookup([Remainder] string trait = null)
+        {
+
+        }
+        [Command("property")]
+        public async Task PropertyLookup([Remainder] string weaponProperty = null)
+        {
+
+        }
     }
 }

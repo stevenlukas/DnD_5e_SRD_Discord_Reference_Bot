@@ -376,4 +376,77 @@ namespace DnD_Discord_Bot.DnD_Discord_Bot
         [JsonProperty("desc")]
         public string[] spellcastingDescription;
     }
+
+    //Used for Condition API lookups
+    public class ConditionRoot
+    {
+        [JsonProperty("index")]
+        public string index;
+        [JsonProperty("name")]
+        public string name;
+        [JsonProperty("desc")]
+        public string[] desc;
+        [JsonProperty("url")]
+        public string url;
+    }
+
+    //Used for Damage Type API lookups
+    public class DamageTypeRoot
+    {
+        [JsonProperty("index")]
+        public string index;
+        [JsonProperty("name")]
+        public string name;
+        [JsonProperty("desc")]
+        public string[] desc;
+        [JsonProperty("url")]
+        public string url;
+    }
+
+    //Used for Equipment API lookups
+    public class EquipmentRoot
+    {
+        [JsonProperty("index")]
+        public string index;
+        [JsonProperty("name")]
+        public string name;
+        [JsonProperty("equipment_category")]
+        public EquipmentCategory equipmentCategory;
+        [JsonProperty("gear_category")]
+        public GearCategory gearCategory;
+        [JsonProperty("cost")]
+        public EquipmentCost cost;
+        [JsonProperty("desc")]
+        public string[] desc;
+        [JsonProperty("weight")]
+        public int weight;
+        [JsonProperty("url")]
+        public string url;
+    }
+    public class EquipmentCategory
+    {
+        [JsonProperty("index")]
+        public string index;
+        [JsonProperty("name")]
+        public string name;
+        [JsonProperty("url")]
+        public string url;
+    }
+    public class GearCategory
+    {
+        [JsonProperty("index")]
+        public string index;
+        [JsonProperty("name")]
+        public string name;
+        [JsonProperty("url")]
+        public string url;
+    }
+    public class EquipmentCost
+    {
+        [JsonProperty("quantity")]
+        public int quantity;
+        [JsonProperty("unit")]
+        public string unit;
+    }
+
 }
