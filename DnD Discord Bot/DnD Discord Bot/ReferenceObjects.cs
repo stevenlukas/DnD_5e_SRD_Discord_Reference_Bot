@@ -538,7 +538,7 @@ namespace DnD_Discord_Bot.DnD_Discord_Bot
         [JsonProperty("languages")]
         public string languages;
         [JsonProperty("challenge_rating")]
-        public float challengeRating;
+        public double challengeRating;
         [JsonProperty("special_abilities")]
         public MonsterSpecialAbility[] specialAbilities;
         [JsonProperty("actions")]

@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using System.Net.Http;
 using Discord.Commands;
 using DnD_Discord_Bot.DnD_Discord_Bot;
+using DnD_Discord_Bot;
 using Newtonsoft.Json;
 using Google.Apis.Util;
 
@@ -12,6 +13,7 @@ namespace DnD_Discord_Bot.Modules
 
     public class Commands : ModuleBase<SocketCommandContext>
     {
+        public BotUtilities botUtilities = new BotUtilities();
         HttpClient _dndClient = new HttpClient();
         //private string searchItem = null;
         private string _dnd5eURL = $"https://www.dnd5eapi.co";
@@ -1151,6 +1153,7 @@ namespace DnD_Discord_Bot.Modules
             }
             else
             {
+
                 monster = monster.Replace(" ", "-");
                 monster = monster.Replace("'", "");
                 string monsterLookup = $"{_dnd5eURL}/api/monsters";
@@ -1162,6 +1165,78 @@ namespace DnD_Discord_Bot.Modules
                     monsterLookup = await _dndClient.GetStringAsync(monsterLookup);
 
                     MonsterRoot monsterObject = JsonConvert.DeserializeObject<MonsterRoot>(monsterLookup);
+                    string strMod = botUtilities.CalculateModifiers(monsterObject.strength);
+                    string dexMod = botUtilities.CalculateModifiers(monsterObject.dexterity);
+                    string conMod = botUtilities.CalculateModifiers(monsterObject.constitution);
+                    string intMod = botUtilities.CalculateModifiers(monsterObject.intelligence);
+                    string wisMod = botUtilities.CalculateModifiers(monsterObject.wisdom);
+                    string chaMod = botUtilities.CalculateModifiers(monsterObject.charisma);
+                    string monsterHeader = $"Name: {monsterObject.name}\n{monsterObject.size} {monsterObject.type}, {monsterObject.alignment}\n";
+                    monsterHeader += $"Armor Class: {monsterObject.armorClass}\nHit Points: {monsterObject.hitPoints} ({monsterObject.hitDice})\nSpeed: Walk {monsterObject.speed.walk} ";
+                    if(monsterObject.speed.swim != null)
+                    {
+                        monsterHeader += $"Swim {monsterObject.speed.swim}";
+                    }
+                    monsterHeader += $"\nSTR: {monsterObject.strength} {strMod} | DEX: {monsterObject.dexterity} {dexMod} | CON: {monsterObject.constitution} {conMod} | INT: {monsterObject.intelligence} {intMod} | WIS: {monsterObject.wisdom} {wisMod} | CHA: {monsterObject.charisma} {chaMod}\n";
+                    bool skill = false;
+                    bool savingThrow = false;
+                    string proficiency = null;
+                    for(int i = 0; i < monsterObject.proficiencies.Count; i++)
+                    {
+                        if(monsterObject.proficiencies[i].proficiency.index.Contains("saving"))
+                        {
+                            if(!savingThrow)
+                            {
+                                savingThrow = true;
+                                monsterHeader += $"Saving Throw: ";
+                                proficiency = monsterObject.proficiencies[i].proficiency.name.Replace("Saving Throw: ", "");
+                                monsterHeader += $"{proficiency} ";
+                            }
+                            else
+                            {
+                                proficiency = monsterObject.proficiencies[i].proficiency.name.Replace("Saving Throw: ", "");
+                                monsterHeader += $"{proficiency} ";
+                            }
+                        }
+                        else if(monsterObject.proficiencies[i].proficiency.index.Contains("skill"))
+                        {
+                            if(!skill)
+                            {
+                                skill = true;
+                                monsterHeader += $"\nSkill: ";
+                                proficiency = monsterObject.proficiencies[i].proficiency.name.Replace("Skill: ", "");
+                                monsterHeader += $"{proficiency} ";
+                            }
+                            else
+                            {
+                                proficiency = monsterObject.proficiencies[i].proficiency.name.Replace("Skill: ", "");
+                                monsterHeader += $"{proficiency} ";
+                            }
+                        }
+                    }
+                    //TODO ADD Vulnerabilities, Resistances, Immunities
+
+                    if(monsterObject.senses != null)
+                    {
+                        monsterHeader += $"\nSenses: ";
+                        if(monsterObject.senses.darkvision != null)
+                        {
+                            monsterHeader += $"Dark Vision ({monsterObject.senses.darkvision}) ";
+                        }
+                        if(monsterObject.senses.passivePerception != null)
+                        {
+                            monsterHeader += $"Passive Perception ({monsterObject.senses.passivePerception}) ";
+                        }
+                        monsterHeader += $"\n";
+                    }
+                    if(monsterObject.languages != null)
+                    {
+                        monsterHeader += $"Languages: {monsterObject.languages}\n";
+                    }
+                    string crXP = botUtilities.CalculateXP(monsterObject.challengeRating);
+                    monsterHeader += $"Challenge Rating {monsterObject.challengeRating} ({crXP} XP)\n";
+
+                    await ReplyAsync(monsterHeader);
                 }
                 else
                 {
