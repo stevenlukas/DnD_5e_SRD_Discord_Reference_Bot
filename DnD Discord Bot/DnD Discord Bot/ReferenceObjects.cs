@@ -449,4 +449,243 @@ namespace DnD_Discord_Bot.DnD_Discord_Bot
         public string unit;
     }
 
+    //Used for Feature API lookups
+    public class FeatureRoot
+    {
+        [JsonProperty("index")]
+        public string index;
+        [JsonProperty("class")]
+        public FeatureClass featureClass;
+        [JsonProperty("name")]
+        public string name;
+        [JsonProperty("level")]
+        public int level;
+        [JsonProperty("desc")]
+        public string[] desc;
+        [JsonProperty("url")]
+        public string url;
+    }
+    public class FeatureClass
+    {
+        [JsonProperty("index")]
+        public string index;
+        [JsonProperty("name")]
+        public string name;
+        [JsonProperty("url")]
+        public string url;
+    }
+
+    //Used for Magic SChool API lookups
+    public class MagicSchoolRoot
+    {
+        [JsonProperty("index")]
+        public string index;
+        [JsonProperty("name")]
+        public string name;
+        [JsonProperty("desc")]
+        public string desc;
+        [JsonProperty("url")]
+        public string url;
+    }
+
+    //Used for Monster API lookups
+    public class MonsterRoot
+    {
+        [JsonProperty("index")]
+        public string index;
+        [JsonProperty("name")]
+        public string name;
+        [JsonProperty("size")]
+        public string size;
+        [JsonProperty("type")]
+        public string type;
+        [JsonProperty("subtype")]
+        public string subtype;
+        [JsonProperty("alignment")]
+        public string alignment;
+        [JsonProperty("armor_class")]
+        public int armorClass;
+        [JsonProperty("hit_points")]
+        public int hitPoints;
+        [JsonProperty("hit_dice")]
+        public string hitDice;
+        [JsonProperty("speed")]
+        public MonsterSpeed speed;
+        [JsonProperty("strength")]
+        public int strength;
+        [JsonProperty("dexterity")]
+        public int dexterity;
+        [JsonProperty("constitution")]
+        public int constitution;
+        [JsonProperty("intelligence")]
+        public int intelligence;
+        [JsonProperty("wisdom")]
+        public int wisdom;
+        [JsonProperty("charisma")]
+        public int charisma;
+        [JsonProperty("proficiencies")]
+        public List<MonsterProficiencies> proficiencies;
+        [JsonProperty("damage_vulnerabilities")]
+        public string[] vulnerabilities;
+        [JsonProperty("damage_resistances")]
+        public string[] resistances;
+        [JsonProperty("damage_imunities")]
+        public string[] damageImmunities;
+        [JsonProperty("condition_immunities")]
+        public string[] conditionImmunities;
+        [JsonProperty("senses")]
+        public MonsterSense senses;
+        [JsonProperty("languages")]
+        public string languages;
+        [JsonProperty("challenge_rating")]
+        public float challengeRating;
+        [JsonProperty("special_abilities")]
+        public MonsterSpecialAbility[] specialAbilities;
+        [JsonProperty("actions")]
+        public MonsterAction[] actions;
+        [JsonProperty("legendary_actions")]
+        public MonsterLegendaryAction[] legendaryActions;
+        [JsonProperty("url")]
+        public string url;
+    }
+    public class MonsterSpeed
+    {
+        [JsonProperty("walk")]
+        public string walk;
+        [JsonProperty("swim")]
+        public string swim;
+    }
+    public class MonsterProficiencies
+    {
+        [JsonProperty("value")]
+        public int value;
+        [JsonProperty("proficiency")]
+        public MonsterProficienciesDetails proficiency;
+    }
+    public class MonsterProficienciesDetails
+    {
+        [JsonProperty("index")]
+        public string index;
+        [JsonProperty("name")]
+        public string name;
+        [JsonProperty("url")]
+        public string url;
+    }
+    public class MonsterSense
+    {
+        [JsonProperty("darkvision")]
+        public string darkvision;
+        [JsonProperty("passive_perception")]
+        public int passivePerception;
+    }
+    public class MonsterSpecialAbility
+    {
+        [JsonProperty("name")]
+        public string name;
+        [JsonProperty("desc")]
+        public string desc;
+        [JsonProperty("dc")]
+        public MonsterSpecialAbilityDC dc;
+    }
+    public class MonsterSpecialAbilityDC
+    {
+        [JsonProperty("dc_type")]
+        public MonsterSpecialAbilityDCType dcType;
+        [JsonProperty("dc_value")]
+        public int dcValue;
+        [JsonProperty("success_type")]
+        public string successType;
+    }
+    public class MonsterSpecialAbilityDCType
+    {
+        [JsonProperty("index")]
+        public string index;
+        [JsonProperty("name")]
+        public string name;
+        [JsonProperty("url")]
+        public string url;
+    }
+    public class MonsterAction
+    {
+        [JsonProperty("name")]
+        public string name;
+        [JsonProperty("desc")]
+        public string desc;
+        [JsonProperty("attack_bonus")]
+        public int attackBonus;
+        [JsonProperty("dc")]
+        public MonsterActionDC dc;
+        [JsonProperty("damage")]
+        public MonsterAttackDamage[] damage;
+        [JsonProperty("usage")]
+        public MonsterActionUsage usage;
+    }
+    public class MonsterActionDC
+    {
+        [JsonProperty("dc_type")]
+        public MonsterActionDCType type;
+        [JsonProperty("dc_value")]
+        public int dcValue;
+        [JsonProperty("success_type")]
+        public string successType;
+    }
+    public class MonsterActionDCType
+    {
+        [JsonProperty("index")]
+        public string index;
+        [JsonProperty("name")]
+        public string name;
+        [JsonProperty("url")]
+        public string url;
+    }
+    public class MonsterAttackDamage
+    {
+        [JsonProperty("damage_type")]
+        public MonsterAttackDamageType type;
+        [JsonProperty("damage_dice")]
+        public string damageDice;
+    }
+    public class MonsterAttackDamageType
+    {
+        [JsonProperty("index")]
+        public string index;
+        [JsonProperty("name")]
+        public string name;
+        [JsonProperty("url")]
+        public string url;
+    }
+    public class MonsterActionUsage
+    {
+        [JsonProperty("type")]
+        public string type;
+        [JsonProperty("times")]
+        public int times;
+    }
+    public class MonsterLegendaryAction
+    {
+        [JsonProperty("name")]
+        public string name;
+        [JsonProperty("desc")]
+        public string desc;
+        [JsonProperty("attack_bonus")]
+        public int attackBonus;
+        [JsonProperty("damage")]
+        public MonsterLegendaryActionDamage[] damage;
+    }
+    public class MonsterLegendaryActionDamage
+    {
+        [JsonProperty("damage_type")]
+        public MonsterLegendaryActionDamageType type;
+        [JsonProperty("damage_dice")]
+        public string damageDice;
+    }
+    public class MonsterLegendaryActionDamageType
+    {
+        [JsonProperty("index")]
+        public string index;
+        [JsonProperty("name")]
+        public string name;
+        [JsonProperty("url")]
+        public string url;
+    }
 }

@@ -22,145 +22,153 @@ namespace DnD_Discord_Bot.Modules
             await ReplyAsync("HEY! I'm working here!");
         }
         [Command("roll")]
-        public async Task Roll(string rollInput, string modifier = "normal")
+        public async Task Roll(string rollInput = null, string modifier = "normal")
         {
-            string[] rollArray = rollInput.Split('d', '+', '-');
-
-            int rollCount = int.Parse(rollArray[0]);
-            int diceType = int.Parse(rollArray[1]);
-            int abilityModifier = 0;
-            int rollTotal = 0;
-            int[] rollResult = new int[rollCount + 1];
-            string modifierType = null;
-            string resultOutput = null;
-
-            bool critFail = false;
-            bool critSuccess = false;
-
-            Random rnd = new Random();
-
-            if (rollInput.Contains("-"))
+            if(rollInput == null)
             {
-                modifierType = "-";
-                abilityModifier = int.Parse(rollArray[2]);
-            }
-            else if (rollInput.Contains("+"))
-            {
-                modifierType = "+";
-                abilityModifier = int.Parse(rollArray[2]);
-            }
-
-            //calculate roll
-            for (int i = 0; i < rollCount; i++)
-            {
-                //sets random number value
-                rollResult[i] = rnd.Next(1, (diceType + 1));
-
-                //applies adv/dis reroll and sets initial final value
-                if (modifier == "advantage" || modifier == "adv" && rollCount == 1 && diceType == 20)
-                {
-                    rollResult[1] = rnd.Next(1, (diceType + 1));
-                    if (rollResult[1] > rollResult[0])
-                    {
-                        rollTotal = rollResult[1];
-                    }
-                    else
-                    {
-                        rollTotal = rollResult[0];
-                    }
-
-                    if (abilityModifier != 0)
-                    {
-                        resultOutput = $"[{rollResult[0]}, {modifierType}{abilityModifier}] [{rollResult[1]}, {modifierType}{abilityModifier}]";
-                    }
-                    else
-                    {
-                        resultOutput = $"[{rollResult[0]}] [{rollResult[1]}]";
-                    }
-                }
-                else if (modifier == "disadvantage" || modifier == "dis" && rollCount == 1 && diceType == 20)
-                {
-                    rollResult[1] = rnd.Next(1, (diceType + 1));
-                    if (rollResult[1] < rollResult[0])
-                    {
-                        rollTotal = rollResult[1];
-                    }
-                    else
-                    {
-                        rollTotal = rollResult[0];
-                    }
-
-                    if (abilityModifier != 0)
-                    {
-                        resultOutput = $"[{rollResult[0]}, {modifierType}{abilityModifier}] [{rollResult[1]}, {modifierType}{abilityModifier}]";
-                    }
-                    else
-                    {
-                        resultOutput = $"[{rollResult[0]}] [{rollResult[1]}]";
-                    }
-                }
-                else
-                {
-                    resultOutput += $"[{rollResult[i]}]";
-                    rollTotal += rollResult[i];
-                }
-            }
-
-            if (diceType == 20 && rollCount == 1)
-            {
-                if (rollResult[0] == 20 || rollResult[1] == 20)
-                {
-                    critSuccess = true;
-                }
-                else if (rollResult[0] == 1 || rollResult[1] == 1)
-                {
-                    critFail = true;
-                }
-            }
-
-            //check for and apply modifier
-            if (rollArray.Length == 3)
-            {
-                if (modifierType == "+")
-                {
-                    rollTotal += abilityModifier;
-                }
-                else if (modifierType == "-")
-                {
-                    rollTotal -= abilityModifier;
-                }
-            }
-
-
-            //output result [roll+mod]
-            //return result
-            if (critFail)
-            {
-                await ReplyAsync($"CRITICAL FAILURE, Natural 1");
-            }
-            else if (critSuccess)
-            {
-                await ReplyAsync($"CRITICAL SUCCESS, Natural 20");
+                await ReplyAsync("You can use any dice imaginable, even a d1000. Use the format !roll <dice type> <optional modifier> <optional advantage disadvantage>. This looks like !roll 1d20 +6 advantage");
             }
             else
             {
-                if (modifier == "disadvantage" || modifier == "advantage" || modifier == "adv" || modifier == "dis")
+                string[] rollArray = rollInput.Split('d', '+', '-');
+
+                int rollCount = int.Parse(rollArray[0]);
+                int diceType = int.Parse(rollArray[1]);
+                int abilityModifier = 0;
+                int rollTotal = 0;
+                int[] rollResult = new int[rollCount + 1];
+                string modifierType = null;
+                string resultOutput = null;
+
+                bool critFail = false;
+                bool critSuccess = false;
+
+                Random rnd = new Random();
+
+                if (rollInput.Contains("-"))
                 {
-                    await ReplyAsync($"{rollTotal} {resultOutput}");
+                    modifierType = "-";
+                    abilityModifier = int.Parse(rollArray[2]);
                 }
-                else if (abilityModifier != 0)
+                else if (rollInput.Contains("+"))
                 {
-                    await ReplyAsync($"{rollTotal} {resultOutput} {modifierType}{abilityModifier}");
+                    modifierType = "+";
+                    abilityModifier = int.Parse(rollArray[2]);
                 }
-                else if (rollCount > 1)
+
+                //calculate roll
+                for (int i = 0; i < rollCount; i++)
                 {
-                    await ReplyAsync($"{rollTotal} {resultOutput}");
+                    //sets random number value
+                    rollResult[i] = rnd.Next(1, (diceType + 1));
+
+                    //applies adv/dis reroll and sets initial final value
+                    if (modifier == "advantage" || modifier == "adv" && rollCount == 1 && diceType == 20)
+                    {
+                        rollResult[1] = rnd.Next(1, (diceType + 1));
+                        if (rollResult[1] > rollResult[0])
+                        {
+                            rollTotal = rollResult[1];
+                        }
+                        else
+                        {
+                            rollTotal = rollResult[0];
+                        }
+
+                        if (abilityModifier != 0)
+                        {
+                            resultOutput = $"[{rollResult[0]}, {modifierType}{abilityModifier}] [{rollResult[1]}, {modifierType}{abilityModifier}]";
+                        }
+                        else
+                        {
+                            resultOutput = $"[{rollResult[0]}] [{rollResult[1]}]";
+                        }
+                    }
+                    else if (modifier == "disadvantage" || modifier == "dis" && rollCount == 1 && diceType == 20)
+                    {
+                        rollResult[1] = rnd.Next(1, (diceType + 1));
+                        if (rollResult[1] < rollResult[0])
+                        {
+                            rollTotal = rollResult[1];
+                        }
+                        else
+                        {
+                            rollTotal = rollResult[0];
+                        }
+
+                        if (abilityModifier != 0)
+                        {
+                            resultOutput = $"[{rollResult[0]}, {modifierType}{abilityModifier}] [{rollResult[1]}, {modifierType}{abilityModifier}]";
+                        }
+                        else
+                        {
+                            resultOutput = $"[{rollResult[0]}] [{rollResult[1]}]";
+                        }
+                    }
+                    else
+                    {
+                        resultOutput += $"[{rollResult[i]}]";
+                        rollTotal += rollResult[i];
+                    }
+                }
+
+                if (diceType == 20 && rollCount == 1)
+                {
+                    if (rollResult[0] == 20 || rollResult[1] == 20)
+                    {
+                        critSuccess = true;
+                    }
+                    else if (rollResult[0] == 1 || rollResult[1] == 1)
+                    {
+                        critFail = true;
+                    }
+                }
+
+                //check for and apply modifier
+                if (rollArray.Length == 3)
+                {
+                    if (modifierType == "+")
+                    {
+                        rollTotal += abilityModifier;
+                    }
+                    else if (modifierType == "-")
+                    {
+                        rollTotal -= abilityModifier;
+                    }
+                }
+
+
+                //output result [roll+mod]
+                //return result
+                if (critFail)
+                {
+                    await ReplyAsync($"CRITICAL FAILURE, Natural 1");
+                }
+                else if (critSuccess)
+                {
+                    await ReplyAsync($"CRITICAL SUCCESS, Natural 20");
                 }
                 else
                 {
-                    await ReplyAsync($"{rollTotal}");
+                    if (modifier == "disadvantage" || modifier == "advantage" || modifier == "adv" || modifier == "dis")
+                    {
+                        await ReplyAsync($"{rollTotal} {resultOutput}");
+                    }
+                    else if (abilityModifier != 0)
+                    {
+                        await ReplyAsync($"{rollTotal} {resultOutput} {modifierType}{abilityModifier}");
+                    }
+                    else if (rollCount > 1)
+                    {
+                        await ReplyAsync($"{rollTotal} {resultOutput}");
+                    }
+                    else
+                    {
+                        await ReplyAsync($"{rollTotal}");
+                    }
                 }
             }
+            
         }
         [Command("spell")]
         public async Task SpellLookup([Remainder] string spell = null)
@@ -172,7 +180,7 @@ namespace DnD_Discord_Bot.Modules
 
             if (spell == null)
             {
-                await ReplyAsync($"This bot can reference all 319 spells listed in the DnD 5e SRD\nThe full list is viewable here: https://www.dnd5eapi.co/api/spells/");
+                await ReplyAsync($"This bot can reference all 319 spells listed in the DnD 5e SRD. Use the format !spell <spell name>, lik !spell fireball");
             }
             else
             {
@@ -260,8 +268,7 @@ namespace DnD_Discord_Bot.Modules
 
             if (abilityScore == null)
             {
-                Console.WriteLine("I'm Null");
-                await ReplyAsync("Please choose one of the following: Charisma, Constitution, Dexterity, Intelligence, Strength, Wisdom");
+                await ReplyAsync("Please choose one of the following: Charisma, Constitution, Dexterity, Intelligence, Strength, Wisdom. Use the command format !abilityscore <ability>");
             }
             else
             {
@@ -366,7 +373,7 @@ namespace DnD_Discord_Bot.Modules
 
             if (skill == null)
             {
-                await ReplyAsync($"You can reference any skill listed in the DnD 5e SRD. A list can be found here {_dnd5eURL}/api/skills");
+                await ReplyAsync($"You can reference any skill listed in the DnD 5e SRD. Use the format !skill <skill name>");
             }
             else
             {
@@ -412,7 +419,7 @@ namespace DnD_Discord_Bot.Modules
 
             if (proficiency == null)
             {
-                await ReplyAsync($"You can reference any Proficiency in the DnD 5e SRD. {_dnd5eURL}/api/proficiencies");
+                await ReplyAsync($"You can reference any Proficiency in the DnD 5e SRD. Use the format !proficiency <proficiency name>");
             }
             else
             {
@@ -459,7 +466,7 @@ namespace DnD_Discord_Bot.Modules
 
             if (language == null)
             {
-                await ReplyAsync($"You can reference any language in the DnD 5e SRD. {_dnd5eURL}/api/languages");
+                await ReplyAsync($"You can reference any language in the DnD 5e SRD. Use the format !language <language name>");
             }
             else
             {
@@ -516,7 +523,7 @@ namespace DnD_Discord_Bot.Modules
 
             if (classes == null)
             {
-                await ReplyAsync($"You can reference any class in the DnD 5e SRD. {_dnd5eURL}/api/classes");
+                await ReplyAsync($"You can reference any class in the DnD 5e SRD. Use the format !class <class name> <optional parameter>\nThe optional parameters are spells, level, starting equipment, spellcasting. For example, !class wizard spells");
             }
             else
             {
@@ -972,7 +979,7 @@ namespace DnD_Discord_Bot.Modules
             string conditionLookup = null;
             if (condition == null)
             {
-                await ReplyAsync("You can lookup any condition listed in the DnD 5e SRD. You can view the condition list at dnd5eapi.co/api/conditions");
+                await ReplyAsync("You can lookup any condition listed in the DnD 5e SRD. Use the format !condition <condition name>");
             }
             else
             {
@@ -1003,7 +1010,7 @@ namespace DnD_Discord_Bot.Modules
         {
             if(damage == null)
             {
-                await ReplyAsync($"You can reference any dmaage type in the DnD 5e SRD. You can view the list at dnd5eapi.co/api/damage-types");
+                await ReplyAsync($"You can reference any dmaage type in the DnD 5e SRD. Use the format !damage <damage type name>");
             }
             else
             {
@@ -1036,24 +1043,28 @@ namespace DnD_Discord_Bot.Modules
             string equipmentLookup = null;
             if(equipment == null)
             {
-                await ReplyAsync("You can reference any item of equipment in the DnD 5e SRD");
+                await ReplyAsync("You can reference any item of equipment in the DnD 5e SRD. Use the format !equipment <equipment name>");
             }
             else
             {
+                equipment = equipment.Replace(" ", "-");
+                equipment = equipment.Replace("'", "");
+                Console.WriteLine(equipment);
                 equipmentLookup = $"{_dnd5eURL}/api/equipment";
                 equipmentLookup = await _dndClient.GetStringAsync(equipmentLookup.ToLower());
                 if(equipmentLookup.Contains(equipment.ToLower()))
                 {
-                    equipmentLookup = $"{_dnd5eURL}/api/equpment/{equipment.Replace(" ", "-")}".ToLower();
+                    equipmentLookup = $"{_dnd5eURL}/api/equipment/{equipment}";
+                    Console.WriteLine(equipmentLookup);
                     equipmentLookup = await _dndClient.GetStringAsync(equipmentLookup);
                     EquipmentRoot equipmentObject = JsonConvert.DeserializeObject<EquipmentRoot>(equipmentLookup);
 
-                    string equipmentHeader = $"Name: {equipmentObject.name}\nEquipment Category: {equipmentObject.equipmentCategory.name}\nGear Type: {equipmentObject.gearCategory.name}\nCost: {equipmentObject.cost.quantity} {equipmentObject.cost.unit}\nWeight: {equipmentObject.weight} lb";
+                    string equipmentHeader = $"Name: {equipmentObject.name}\nEquipment Category: {equipmentObject.equipmentCategory.name}\nGear Type: {equipmentObject.gearCategory.name}\nCost: {equipmentObject.cost.quantity} {equipmentObject.cost.unit}\nWeight: {equipmentObject.weight} lb\n";
                     if(equipmentObject.desc != null)
                     {
                         foreach(string desc in equipmentObject.desc)
                         {
-                            equipmentHeader += desc;
+                            equipmentHeader += desc +" ";
                         }
                     }
                     await ReplyAsync(equipmentHeader);
@@ -1067,17 +1078,96 @@ namespace DnD_Discord_Bot.Modules
         [Command("feature")]
         public async Task FeatureLookup([Remainder] string feature = null)
         {
+            if(feature == null)
+            {
+                await ReplyAsync("You can look up any feature in the DnD 5e SRD. Use the format !feature <feature name>");
+            }
+            else
+            {
+                feature = feature.Replace(" ", "-");
+                feature = feature.Replace("'", "");
+                string featureLookup = $"{_dnd5eURL}/api/features".ToLower();
+                featureLookup = await _dndClient.GetStringAsync(featureLookup);
+                if(featureLookup.Contains(feature))
+                {
+                    featureLookup = $"{_dnd5eURL}/api/features/{feature}".ToLower();
+                    featureLookup = await _dndClient.GetStringAsync(featureLookup);
+                    FeatureRoot featureObject = JsonConvert.DeserializeObject<FeatureRoot>(featureLookup);
 
+                    string featureHeader = $"Feature: {featureObject.name}\nClass: {featureObject.featureClass.name}\nFeature available at level {featureObject.level}\n";
+                    if(featureObject.desc != null)
+                    {
+                        foreach(string desc in featureObject.desc)
+                        {
+                            featureHeader += desc + " ";
+                        }
+                    }
+
+                    await ReplyAsync(featureHeader);
+                }
+                else
+                {
+                    await ReplyAsync($"{feature} is not found in the DnD 5e SRD");
+                }
+
+            }
         }
         [Command("school")]
         public async Task MagicSchoolLookup([Remainder] string magicSchool = null)
         {
+            if(magicSchool == null)
+            {
+                await ReplyAsync("You can reference any school of magic listed in the DnD 5e SRD. Use the format !school <school name>");
+            }
+            else
+            {
+                magicSchool = magicSchool.Replace(" ", "-");
+                magicSchool = magicSchool.Replace("'", "");
+                string magicSchoolLookup = $"{_dnd5eURL}/api/magic-schools";
+                magicSchoolLookup = await _dndClient.GetStringAsync(magicSchoolLookup);
 
+                if(magicSchoolLookup.Contains(magicSchool))
+                {
+                    magicSchoolLookup = $"{_dnd5eURL}/api/magic-schools/{magicSchool}".ToLower();
+                    magicSchoolLookup = await _dndClient.GetStringAsync(magicSchoolLookup);
+                    MagicSchoolRoot magicSchoolObject = JsonConvert.DeserializeObject<MagicSchoolRoot>(magicSchoolLookup);
+
+                    string magicSchoolHeader = $"Name: {magicSchoolObject.name}\n{magicSchoolObject.desc}";
+
+                    await ReplyAsync(magicSchoolHeader);
+                }
+                else
+                {
+                    await ReplyAsync($"{magicSchool} is not found in the DnD 5e SRD");
+                }
+            }
         }
         [Command("monster")]
         public async Task MonsterLookup([Remainder] string monster = null)
         {
+            if(monster == null)
+            {
+                await ReplyAsync("You can reference any Monster in the DnD 5e SRD. Use the format !monster <monster name>");
+            }
+            else
+            {
+                monster = monster.Replace(" ", "-");
+                monster = monster.Replace("'", "");
+                string monsterLookup = $"{_dnd5eURL}/api/monsters";
+                monsterLookup = await _dndClient.GetStringAsync(monsterLookup);
 
+                if(monsterLookup.Contains(monster.ToLower()))
+                {
+                    monsterLookup = $"{_dnd5eURL}/api/monsters/{monster}".ToLower();
+                    monsterLookup = await _dndClient.GetStringAsync(monsterLookup);
+
+                    MonsterRoot monsterObject = JsonConvert.DeserializeObject<MonsterRoot>(monsterLookup);
+                }
+                else
+                {
+                    await ReplyAsync($"{monster} is not found in the DnD 5e SRD");
+                }
+            }
         }
         [Command("race")]
         public async Task RaceLookup([Remainder] string race = null)
