@@ -1175,7 +1175,11 @@ namespace DnD_Discord_Bot.Modules
                     monsterHeader += $"Armor Class: {monsterObject.armorClass}\nHit Points: {monsterObject.hitPoints} ({monsterObject.hitDice})\nSpeed: Walk {monsterObject.speed.walk} ";
                     if(monsterObject.speed.swim != null)
                     {
-                        monsterHeader += $"Swim {monsterObject.speed.swim}";
+                        monsterHeader += $"Swim {monsterObject.speed.swim} ";
+                    }
+                    if(monsterObject.speed.fly != null)
+                    {
+                        monsterHeader += $"Fly {monsterObject.speed.fly} ";
                     }
                     monsterHeader += $"\nSTR: {monsterObject.strength} {strMod} | DEX: {monsterObject.dexterity} {dexMod} | CON: {monsterObject.constitution} {conMod} | INT: {monsterObject.intelligence} {intMod} | WIS: {monsterObject.wisdom} {wisMod} | CHA: {monsterObject.charisma} {chaMod}\n";
                     bool skill = false;
@@ -1215,6 +1219,42 @@ namespace DnD_Discord_Bot.Modules
                         }
                     }
                     //TODO ADD Vulnerabilities, Resistances, Immunities
+                    if(monsterObject.damageVulnerabilities != null)
+                    {
+                        monsterHeader += $"Damage Vulnerabilities: ";
+                        foreach(string vulnerability in monsterObject.damageVulnerabilities)
+                        {
+                            monsterHeader += $"{vulnerability} ";
+                        }
+                        monsterHeader += "\n";
+                    }
+                    if(monsterObject.damageResistances != null)
+                    {
+                        monsterHeader += $"Damage Resistances: ";
+                        foreach(string resistance in monsterObject.damageResistances)
+                        {
+                            monsterHeader += $"{resistance} ";
+                        }
+                        monsterHeader += "\n";
+                    }
+                    if(monsterObject.damageImmunities != null)
+                    {
+                        monsterHeader += $"Damage Immunities: ";
+                        foreach(string immunity in monsterObject.damageImmunities)
+                        {
+                            monsterHeader += $"{immunity} ";
+                        }
+                        monsterHeader += "\n";
+                    }
+                    if(monsterObject.conditionImmunities != null)
+                    {
+                        monsterHeader += $"Condition Immunities: ";
+                        foreach(MonsterConditionImmunities immunity in monsterObject.conditionImmunities)
+                        {
+                            monsterHeader += $"{immunity.name} ";
+                        }
+                        monsterHeader += "\n";
+                    }
 
                     if(monsterObject.senses != null)
                     {
@@ -1236,7 +1276,51 @@ namespace DnD_Discord_Bot.Modules
                     string crXP = botUtilities.CalculateXP(monsterObject.challengeRating);
                     monsterHeader += $"Challenge Rating {monsterObject.challengeRating} ({crXP} XP)\n";
 
+                    string monsterSpecialAbilities = null;
+                    if(monsterObject.specialAbilities != null)
+                    {
+                        monsterSpecialAbilities = "Special Abilities\n";
+                        foreach(MonsterSpecialAbility ability in monsterObject.specialAbilities)
+                        {
+                            monsterSpecialAbilities += $"Name: {ability.name}\n{ability.desc}\n";
+                        }
+                    }
+                    string monsterActions = null;
+                    if(monsterObject.actions != null)
+                    {
+                        monsterActions = "Actions\n";
+                        foreach(MonsterAction action in monsterObject.actions)
+                        {
+                            monsterActions += $"Name: {action.name}\n{action.desc}\n";
+                            if(action.usage != null)
+                            {
+                                monsterActions += $"Uses: {action.usage.times} {action.usage.type}\n";
+                            }
+                        }
+                    }
+                    string monsterLegendaryActions = null;
+                    if(monsterObject.legendaryActions != null)
+                    {
+                        monsterLegendaryActions = "Legendary Actions\n";
+                        foreach(MonsterLegendaryAction legendaryAction in monsterObject.legendaryActions)
+                        {
+                            monsterLegendaryActions += $"Name: {legendaryAction.name}\n{legendaryAction.desc}\n";
+                        }
+                    }
+
                     await ReplyAsync(monsterHeader);
+                    if(monsterSpecialAbilities != null)
+                    {
+                        await ReplyAsync(monsterSpecialAbilities);
+                    }
+                    if(monsterActions != null)
+                    {
+                        await ReplyAsync(monsterActions);
+                    }
+                    if(monsterLegendaryActions != null)
+                    {
+                        await ReplyAsync(monsterLegendaryActions);
+                    }
                 }
                 else
                 {

@@ -526,13 +526,13 @@ namespace DnD_Discord_Bot.DnD_Discord_Bot
         [JsonProperty("proficiencies")]
         public List<MonsterProficiencies> proficiencies;
         [JsonProperty("damage_vulnerabilities")]
-        public string[] vulnerabilities;
+        public string[] damageVulnerabilities;
         [JsonProperty("damage_resistances")]
-        public string[] resistances;
+        public string[] damageResistances;
         [JsonProperty("damage_imunities")]
         public string[] damageImmunities;
         [JsonProperty("condition_immunities")]
-        public string[] conditionImmunities;
+        public MonsterConditionImmunities[] conditionImmunities;
         [JsonProperty("senses")]
         public MonsterSense senses;
         [JsonProperty("languages")]
@@ -548,12 +548,23 @@ namespace DnD_Discord_Bot.DnD_Discord_Bot
         [JsonProperty("url")]
         public string url;
     }
+    public class MonsterConditionImmunities
+    {
+        [JsonProperty("index")]
+        public string index;
+        [JsonProperty("name")]
+        public string name;
+        [JsonProperty("url")]
+        public string url;
+    }
     public class MonsterSpeed
     {
         [JsonProperty("walk")]
         public string walk;
         [JsonProperty("swim")]
         public string swim;
+        [JsonProperty("fly")]
+        public string fly;
     }
     public class MonsterProficiencies
     {
@@ -680,6 +691,104 @@ namespace DnD_Discord_Bot.DnD_Discord_Bot
         public string damageDice;
     }
     public class MonsterLegendaryActionDamageType
+    {
+        [JsonProperty("index")]
+        public string index;
+        [JsonProperty("name")]
+        public string name;
+        [JsonProperty("url")]
+        public string url;
+    }
+
+    //Used for Race API lookups
+    public class RaceRoot
+    {
+        [JsonProperty("index")]
+        public string index;
+        [JsonProperty("name")]
+        public string name;
+        [JsonProperty("speed")]
+        public int speed;
+        [JsonProperty("ability_bonuses")]
+        public RaceAbilityBonus[] abilityBonuses;
+        [JsonProperty("alignment")]
+        public string alignment;
+        [JsonProperty("age")]
+        public string age;
+        [JsonProperty("size")]
+        public string size;
+        [JsonProperty("size_description")]
+        public string sizeDescription;
+        [JsonProperty("starting_proficiencies")]
+        public RaceStartingProficiencies[] startingProficiencies;
+        [JsonProperty("languages")]
+        public RaceLanguages[] languages;
+        [JsonProperty("language_desc")]
+        public string languageDesc;
+        [JsonProperty("traits")]
+        public RaceTraits[] traits;
+        [JsonProperty("trait_options", NullValueHandling = NullValueHandling.Ignore)]
+        public RaceTraitOptions traitOptions;
+        [JsonProperty("subraces")]
+        public RaceSubraces[] subraces;
+    }
+    public class RaceAbilityBonus
+    {
+        [JsonProperty("index")]
+        public string index;
+        [JsonProperty("name")]
+        public string name;
+        [JsonProperty("bonus")]
+        public int bonus;
+        [JsonProperty("url")]
+        public string url;
+    }
+    public class RaceStartingProficiencies
+    {
+        [JsonProperty("index")]
+        public string index;
+        [JsonProperty("name")]
+        public string name;
+        [JsonProperty("url")]
+        public string url;
+    }
+    public class RaceLanguages
+    {
+        [JsonProperty("index")]
+        public string index;
+        [JsonProperty("name")]
+        public string name;
+        [JsonProperty("url")]
+        public string url;
+    }
+    public class RaceTraits
+    {
+        [JsonProperty("index")]
+        public string index;
+        [JsonProperty("name")]
+        public string name;
+        [JsonProperty("url")]
+        public string url;
+    }
+    public class RaceTraitOptions
+    {
+        [JsonProperty("choose")]
+        public int choose;
+        [JsonProperty("from")]
+        public RaceTraitOptionsFrom[] from;
+        [JsonProperty("type")]
+        public string type;
+    }
+    public class RaceTraitOptionsFrom
+    {
+        [JsonProperty("index")]
+        public string index;
+        [JsonProperty("name")]
+        public string name;
+        [JsonProperty("url")]
+        public string url;
+    }
+    public class RaceSubraces
     {
         [JsonProperty("index")]
         public string index;
