@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "pyxX9NrtxQw8FFeNEttHh1ipNtHaAtiGp893CKFSGMCsUimRYH+Qq69cdDPkX8G3pE4IjJsCi8jKVvJq+6byDQ==",
+  "dgSpecHash": "sibvIbOfWxINF9ik98NhHJMQZp73empmH3j8KZxxNk99qBxGDohM4ijGFGd5jxC8KK9sB7FQ2UVlJQiLnmmwEg==",
   "success": true,
-  "projectFilePath": "D:\\GitHub\\Personal-Projects\\Bots\\DnD Discord Bot\\DnD Discord Bot.csproj",
+  "projectFilePath": "D:\\GitHub\\DnD_5e_SRD_Discord_Reference_Bot\\DnD Discord Bot\\DnD Discord Bot.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\steve\\.nuget\\packages\\discord.net\\2.1.1\\discord.net.2.1.1.nupkg.sha512",
     "C:\\Users\\steve\\.nuget\\packages\\discord.net.commands\\2.1.1\\discord.net.commands.2.1.1.nupkg.sha512",
