@@ -8,6 +8,7 @@ using DnD_Discord_Bot;
 using Newtonsoft.Json;
 using Google.Apis.Util;
 using System.Net.Http.Headers;
+using System.Runtime.InteropServices.ComTypes;
 
 namespace DnD_Discord_Bot.Modules
 {
@@ -18,6 +19,7 @@ namespace DnD_Discord_Bot.Modules
         HttpClient _dndClient = new HttpClient();
         //private string searchItem = null;
         private string _dnd5eURL = $"https://www.dnd5eapi.co";
+        private string _supportURL = $"https://github.com/stevenlukas/DnD_5e_SRD_Discord_Reference_Bot/wiki";
 
         [Command("test")]
         public async Task testMessage()
@@ -1570,7 +1572,74 @@ namespace DnD_Discord_Bot.Modules
         [Command("subrace")]
         public async Task SubraceLookup([Remainder] string subrace = null)
         {
+            if(subrace != null)
+            {
+                string subraceLookup = $"{_dnd5eURL}/api/subraces";
+                subraceLookup = await _dndClient.GetStringAsync(subraceLookup);
+                subrace = subrace.Replace("'", "");
+                subrace = subrace.Replace(" ", "-");
+                if(subraceLookup.Contains(subrace.ToLower()))
+                {
+                    subraceLookup = $"{_dnd5eURL}/api/subraces/{subrace}".ToLower();
+                    subraceLookup = await _dndClient.GetStringAsync(subraceLookup);
+                    SubraceRoot subraceObject = JsonConvert.DeserializeObject<SubraceRoot>(subraceLookup);
 
+                    string subraceHeader = $"Name: {subraceObject.name}\nAbility Bonuses: ";
+                    foreach(SubraceAbilityBonuses abilityBonus in subraceObject.abilityBonuses)
+                    {
+                        subraceHeader += $"{abilityBonus.name} +{abilityBonus.bonus} ";
+                    }
+                    subraceHeader += "\nRacial Traits: ";
+                    foreach(SubraceRacialTraits trait in subraceObject.racialTraits)
+                    {
+                        subraceHeader += $"{trait.name} ";
+                    }
+                    subraceHeader += "\n";
+                    if(subraceObject.racialTraitOptions != null)
+                    {
+                        subraceHeader += $"Choose {subraceObject.racialTraitOptions.choose} additional trait(s): ";
+                        foreach(SubraceRacialTraitOptionsFrom option in subraceObject.racialTraitOptions.from)
+                        {
+                            subraceHeader += $"{option.name} ";
+                        }
+                        subraceHeader += "\n";
+                    }
+                    if(subraceObject.startingProficiencies != null)
+                    {
+                        subraceHeader += $"Starting Proficiencies: ";
+                        foreach(SubraceStartingProficiencies proficiency in subraceObject.startingProficiencies)
+                        {
+                            subraceHeader += $"{proficiency.name} ";
+                        }
+                        subraceHeader += "\n";
+                    }
+                    if(subraceObject.languageOptions != null)
+                    {
+                        subraceHeader += $"Choose {subraceObject.languageOptions.choose} additional language(s): ";
+                        foreach(SubraceLanguageOptionsFrom option in subraceObject.languageOptions.from)
+                        {
+                            subraceHeader += $"{option.name} ";
+                        }
+                        subraceHeader += "\n";
+                    }
+                    subraceHeader += $"{subraceObject.desc} ";
+
+                    await ReplyAsync(subraceHeader);
+                }
+                else
+                {
+                    await ReplyAsync($"{subrace} is not found in the DnD 5e SRD");
+                }
+            }
+            else
+            {
+                await ReplyAsync("You can reference any Subrace in the DnD 5e SRD");
+            }
+        }
+        [Command("help")]
+        public async Task Help()
+        {
+            await ReplyAsync($"You can view the commands and their descriptions at {_supportURL}");
         }
     }
 }

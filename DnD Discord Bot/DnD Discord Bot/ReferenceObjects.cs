@@ -884,6 +884,88 @@ namespace DnD_Discord_Bot.DnD_Discord_Bot
     //Used for Subrace API lookups
     public class SubraceRoot
     {
-
+        [JsonProperty("index")]
+        public string index;
+        [JsonProperty("name")]
+        public string name;
+        [JsonProperty("desc")]
+        public string desc;
+        [JsonProperty("ability_bonuses")]
+        public SubraceAbilityBonuses[] abilityBonuses;
+        [JsonProperty("language_options", NullValueHandling = NullValueHandling.Ignore)]
+        public SubraceLanguageOptions languageOptions;
+        [JsonProperty("racial_traits")]
+        public SubraceRacialTraits[] racialTraits;
+        [JsonProperty("racial_trait_options", NullValueHandling = NullValueHandling.Ignore)]
+        public SubraceRacialTraitOptions racialTraitOptions;
+        [JsonProperty("starting_proficiencies")]
+        public SubraceStartingProficiencies[] startingProficiencies;
+        [JsonProperty("url")]
+        public string url;
+    }
+    public class SubraceAbilityBonuses
+    {
+        [JsonProperty("index")]
+        public string index;
+        [JsonProperty("name")]
+        public string name;
+        [JsonProperty("bonus")]
+        public int bonus;
+        [JsonProperty("url")]
+        public string url;
+    }
+    public class SubraceLanguageOptions
+    {
+        [JsonProperty("choose")]
+        public int choose;
+        [JsonProperty("from")]
+        public SubraceLanguageOptionsFrom[] from;
+        [JsonProperty("type")]
+        public string type;
+    }
+    public class SubraceLanguageOptionsFrom
+    {
+        [JsonProperty("index")]
+        public string index;
+        [JsonProperty("name")]
+        public string name;
+        [JsonProperty("url")]
+        public string url;
+    }
+    public class SubraceRacialTraits
+    {
+        [JsonProperty("index")]
+        public string index;
+        [JsonProperty("name")]
+        public string name;
+        [JsonProperty("url")]
+        public string url;
+    }
+    public class SubraceRacialTraitOptions
+    {
+        [JsonProperty("choose")]
+        public int choose;
+        [JsonProperty("from")]
+        public SubraceRacialTraitOptionsFrom[] from;
+        [JsonProperty("type")]
+        public string type;
+    }
+    public class SubraceRacialTraitOptionsFrom
+    {
+        [JsonProperty("index")]
+        public string index;
+        [JsonProperty("name")]
+        public string name;
+        [JsonProperty("url")]
+        public string url;
+    }
+    public class SubraceStartingProficiencies
+    {
+        [JsonProperty("index")]
+        public string index;
+        [JsonProperty("name")]
+        public string name;
+        [JsonProperty("url")]
+        public string url;
     }
 }
