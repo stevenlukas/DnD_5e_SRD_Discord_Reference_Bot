@@ -86,3 +86,9 @@ D:\GitHub\DnD_5e_SRD_Discord_Reference_Bot\DnD Discord Bot\obj\Debug\netcoreapp3
 D:\GitHub\DnD_5e_SRD_Discord_Reference_Bot\DnD Discord Bot\obj\Debug\netcoreapp3.0\DnD Discord Bot.dll
 D:\GitHub\DnD_5e_SRD_Discord_Reference_Bot\DnD Discord Bot\obj\Debug\netcoreapp3.0\DnD Discord Bot.pdb
 D:\GitHub\DnD_5e_SRD_Discord_Reference_Bot\DnD Discord Bot\obj\Debug\netcoreapp3.0\DnD Discord Bot.genruntimeconfig.cache
+D:\Project Builds\netcoreapp3.0\DnD Discord Bot.exe
+D:\Project Builds\netcoreapp3.0\DnD Discord Bot.deps.json
+D:\Project Builds\netcoreapp3.0\DnD Discord Bot.runtimeconfig.json
+D:\Project Builds\netcoreapp3.0\DnD Discord Bot.runtimeconfig.dev.json
+D:\Project Builds\netcoreapp3.0\DnD Discord Bot.dll
+D:\Project Builds\netcoreapp3.0\DnD Discord Bot.pdb

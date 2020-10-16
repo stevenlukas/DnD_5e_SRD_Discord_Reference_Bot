@@ -6,6 +6,10 @@
     <RootNamespace>DnD_Discord_Bot</RootNamespace>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <OutputPath>D:\Project Builds\</OutputPath>
+  </PropertyGroup>
+
   <ItemGroup>
     <Compile Remove="DnD Discord Bot\CommandHandler.cs" />
     <Compile Remove="DnD Discord Bot\DiceBag.cs" />
