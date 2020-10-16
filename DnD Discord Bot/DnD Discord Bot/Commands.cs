@@ -7,6 +7,7 @@ using DnD_Discord_Bot.DnD_Discord_Bot;
 using DnD_Discord_Bot;
 using Newtonsoft.Json;
 using Google.Apis.Util;
+using System.Net.Http.Headers;
 
 namespace DnD_Discord_Bot.Modules
 {
@@ -1397,33 +1398,174 @@ namespace DnD_Discord_Bot.Modules
             }
         }
         [Command("subclass")]
-        public async Task SubclassLookup(string subclass = null, string option = null, [Remainder] string optionModifier = null)
+        public async Task SubclassLookup([Remainder]string subclass = null)
         {
             if(subclass != null)
             {
-                if(option != null)
+                string subclassLookup = null;
+                subclassLookup = $"{_dnd5eURL}/api/subclasses";
+                subclassLookup = await _dndClient.GetStringAsync(subclassLookup);
+                subclass = subclass.Replace(" ", "-");
+                subclass = subclass.Replace("'", "");
+                if (subclassLookup.Contains(subclass.ToLower()))
                 {
+                    subclassLookup = $"{_dnd5eURL}/api/subclasses/{subclass}".ToLower();
+                    subclassLookup = await _dndClient.GetStringAsync(subclassLookup);
+                    SubclassRoot subclassObject = JsonConvert.DeserializeObject<SubclassRoot>(subclassLookup);
 
+                    string subclassHeader = $"Name: {subclassObject.name}\nClass: {subclassObject.subclassClass.name}\nSubclass Flavor: {subclassObject.flavor}\n";
+                    foreach (string desc in subclassObject.desc)
+                    {
+                        subclassHeader += $"{desc} ";
+                    }
+                    switch(subclassObject.index)
+                    {
+                        case "thief":
+                            subclassHeader += "\nFeatures at Level 3: Fast Hands, Second-Story Work\nFeatures at Level 9: Supreme Sneak\nFeatures at Level 13: Use Magic Device\nFeatures at Level 17: Thief's Reflexes";
+                            break;
+
+                        case "open-hand":
+                            subclassHeader += "\nFeatures at level 3: Open Hand Technique\nFeatures at level 6: Wholeness of Body\nFeatures at level 11: Tranquility\nFeatures at level 17: Quivering Palm";
+                            break;
+
+                        case "lore":
+                            subclassHeader += "\nFeatures at level 3: Bonus Proficiencies, Cutting Words\nFeatures at level 6: Additional Magical Secrets (max 3)\nFeatures at level 14: Peerless Skill";
+                            break;
+
+                        case "life":
+                            subclassHeader += "\nFeatures at level 1: Disciple of Life\nFeatures at level 2: Channel Divinity (Preserve Life)\nFeatures at level 6: Blessed Healer\nFeatures at level 8: Divine Strike\nFeatures at level 17: Supreme Healing";
+                            break;
+
+                        case "land":
+                            subclassHeader += "\nFeatures at level 2: Bonus Cantrip\nFeatures at level 6: Land's Stride\nFeatures at level 10: Nature's Ward\nFeatures at level 14: Nature's Sanctuary";
+                            break;
+
+                        case "hunter":
+                            subclassHeader += "\nFeatures at level 3: Choose Hunter's Prey\nFeatures at level 7: Choose Defensive Tactics\nFeatures at level 11: Choose Multi-Attack\nFeatures at level 15: Choose Superior Hunter's Defense";
+                            break;
+
+                        case "fiend":
+                            subclassHeader += "\nFeatures at level 1: Dark One's Blessing\nFeatures at level 6: Dark One's Own Luck\nFeatures at level 10: Fiendish Resilience\nFeatures at level 14: Hurl Through Hell";
+                            break;
+
+                        case "evocation":
+                            subclassHeader += "\nFeatures at level 2: Evocation Savant, Sculpt Spells/nFeatures at level 6: Potent Cantrip\nFeatures at level 10: Empowered Evocation\nFeatures at level 14: Overchannel";
+                            break;
+
+                        case "draconic":
+                            subclassHeader += "\nFeatures at level 1: Choose Dragon Ancestor, Draconic Resilience\nFeatures at level 6: Elemental Affinity\nFeatures at level 14: Dragon Wings\nFeatures at level 18: Draconic Presence";
+                            break;
+
+                        case "devotion":
+                            subclassHeader += "\nFeatures at level 3: Channel Divinity\nFeatures at level 7: Aura of Devotion (10ft)\nFeatures at level 15: Purity of Spirit\nFeatures at level 18: Aura Range 30ft\nFeatures at level 20: Holy Nimbus";
+                            break;
+
+                        case "champion":
+                            subclassHeader += "\nFeatures at level 3: Improved Critical\nFeatures at level 7: Remarkable Athlete\nFeatures at level 10: Choose Additional Fighting Style\nFeatures at level 15: Superior Critical\nFeatures at level 18: Survivor";
+                            break;
+
+                        case "berserker":
+                            subclassHeader += "\nFeatures at level 3: Frenzy\nFeatures at level 6: Mindless Rage\nFeatures at level 10: Intimidating Presence\nFeatures at level 14: Retaliation";
+                            break;
+
+                        default:
+                            break;
+                    }
+                    await ReplyAsync(subclassHeader);
                 }
                 else
                 {
-
+                    await ReplyAsync($"{subclass} is not found int the DnD 5e SRD");
                 }
             }
             else
             {
-                await ReplyAsync("You can reference any Subclass in the DnD 5e SRD. Use the format !subclass <subclass name>, or for subclass levels use !subclass <subclass name> level <level number>");
+                await ReplyAsync("You can reference any Subclass in the DnD 5e SRD. Use the format !subclass <subclass name>");
             }
         }
         [Command("trait")]
         public async Task TraitLookup([Remainder] string trait = null)
         {
+            if(trait != null)
+            {
+                string traitLookup = $"{_dnd5eURL}/api/traits";
+                traitLookup = await _dndClient.GetStringAsync(traitLookup);
+                trait = trait.Replace(" ", "-");
+                trait = trait.Replace("'", "");
+                if(traitLookup.Contains(trait.ToLower()))
+                {
+                    traitLookup = $"{_dnd5eURL}/api/traits/{trait}".ToLower();
+                    traitLookup = await _dndClient.GetStringAsync(traitLookup);
+                    TraitRoot traitObject = JsonConvert.DeserializeObject<TraitRoot>(traitLookup);
 
+                    string stringHeader = $"Name: {traitObject.name}\n";
+                    if(traitObject.races != null)
+                    {
+                        stringHeader += "Races: ";
+                        foreach(TraitRaces race in traitObject.races)
+                        {
+                            stringHeader += $"{race.name} ";
+                        }
+                        stringHeader += "\n";
+                    }
+                    if(traitObject.proficiencies != null)
+                    {
+                        stringHeader += "Proficiencies: ";
+                        foreach(TraitProficiencies proficiency in traitObject.proficiencies)
+                        {
+                            stringHeader += $"{proficiency.name} ";
+                        }
+                        stringHeader += "\n";
+                    }
+                    foreach(string desc in traitObject.desc)
+                    {
+                        stringHeader += $"{desc} ";
+                    }
+                    await ReplyAsync(stringHeader);
+                }
+                else
+                {
+                    await ReplyAsync($"{trait} is not found in the DnD 5e SRD");
+                }
+            }
+            else
+            {
+                await ReplyAsync("You can reference any trait in the DnD 5e SRD. Use the format !trait <trait name>");
+            }
         }
         [Command("property")]
         public async Task PropertyLookup([Remainder] string weaponProperty = null)
         {
+            if(weaponProperty != null)
+            {
+                weaponProperty = weaponProperty.Replace("'", "");
+                weaponProperty = weaponProperty.Replace(" ", "-");
+                string propertyLookup = $"{_dnd5eURL}/api/weapon-properties";
+                propertyLookup = await _dndClient.GetStringAsync(propertyLookup);
+                
+                if(propertyLookup.Contains(weaponProperty.ToLower()))
+                {
+                    propertyLookup = $"{_dnd5eURL}/api/weapon-properties/{weaponProperty}".ToLower();
+                    propertyLookup = await _dndClient.GetStringAsync(propertyLookup);
+                    WeaponPropertyRoot propertyObject = JsonConvert.DeserializeObject<WeaponPropertyRoot>(propertyLookup);
 
+                    string propertyHeader = $"Name: {propertyObject.name}\n";
+                    foreach(string desc in propertyObject.desc)
+                    {
+                        propertyHeader += $"{desc} ";
+                    }
+
+                    await ReplyAsync(propertyHeader);
+                }
+                else
+                {
+                    await ReplyAsync($"{weaponProperty} is not found in the DnD 5e SRD");
+                }
+            }
+            else
+            {
+                await ReplyAsync("You can reference any weapon property listed in the DnD 5e SRD. Use the format !property <weapon property name>");
+            }
         }
         [Command("subrace")]
         public async Task SubraceLookup([Remainder] string subrace = null)

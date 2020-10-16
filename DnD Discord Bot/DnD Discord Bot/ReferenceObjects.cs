@@ -825,4 +825,65 @@ namespace DnD_Discord_Bot.DnD_Discord_Bot
         [JsonProperty("url")]
         public string url;
     }
+
+    //Used for Trait API lookups
+    public class TraitRoot
+    {
+        [JsonProperty("index")]
+        public string index;
+        [JsonProperty("races")]
+        public TraitRaces[] races;
+        [JsonProperty("subraces")]
+        public TraitSubraces[] subraces;
+        [JsonProperty("name")]
+        public string name;
+        [JsonProperty("desc")]
+        public string[] desc;
+        [JsonProperty("proficiencies")]
+        public TraitProficiencies[] proficiencies;
+        [JsonProperty("url")]
+        public string url;
+    }
+    public class TraitRaces
+    {
+        [JsonProperty("index")]
+        public string index;
+        [JsonProperty("name")]
+        public string name;
+        [JsonProperty("url")]
+        public string url;
+    }
+    public class TraitSubraces
+    {
+        [JsonProperty("name")]
+        public string name;
+    }
+    public class TraitProficiencies
+    {
+        [JsonProperty("index")]
+        public string index;
+        [JsonProperty("name")]
+        public string name;
+        [JsonProperty("url")]
+        public string url;
+    }
+
+    //Used for Weapon Property API lookups
+    public class WeaponPropertyRoot
+    {
+        [JsonProperty("index")]
+        public string index;
+        [JsonProperty("name")]
+        public string name;
+        [JsonProperty("desc")]
+        public string[] desc;
+        [JsonProperty("url")]
+        public string url;
+    }
+
+    //Used for Subrace API lookups
+    public class SubraceRoot
+    {
+
+    }
 }
