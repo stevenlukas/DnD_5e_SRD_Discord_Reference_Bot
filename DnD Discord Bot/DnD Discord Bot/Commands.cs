@@ -1,14 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Net.Http;
 using Discord.Commands;
 using DnD_Discord_Bot.DnD_Discord_Bot;
-using DnD_Discord_Bot;
 using Newtonsoft.Json;
-using Google.Apis.Util;
-using System.Net.Http.Headers;
-using System.Runtime.InteropServices.ComTypes;
 
 namespace DnD_Discord_Bot.Modules
 {
