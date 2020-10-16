@@ -797,4 +797,32 @@ namespace DnD_Discord_Bot.DnD_Discord_Bot
         [JsonProperty("url")]
         public string url;
     }
+
+    //Used for Subclass API lookups
+    public class SubclassRoot
+    {
+        [JsonProperty("index")]
+        public string index;
+        [JsonProperty("class")]
+        public SubclassClass subclassClass;
+        [JsonProperty("name")]
+        public string name;
+        [JsonProperty("subclass_flavor")]
+        public string flavor;
+        [JsonProperty("desc")]
+        public string[] desc;
+        [JsonProperty("subclass_levels")]
+        public string levels;
+        [JsonProperty("url")]
+        public string url;
+    }
+    public class SubclassClass
+    {
+        [JsonProperty("index")]
+        public string index;
+        [JsonProperty("name")]
+        public string name;
+        [JsonProperty("url")]
+        public string url;
+    }
 }

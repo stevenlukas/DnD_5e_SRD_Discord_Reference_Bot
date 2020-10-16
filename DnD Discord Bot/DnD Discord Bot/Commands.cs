@@ -26,7 +26,7 @@ namespace DnD_Discord_Bot.Modules
         [Command("roll")]
         public async Task Roll(string rollInput = null, string modifier = "normal")
         {
-            if(rollInput == null)
+            if (rollInput == null)
             {
                 await ReplyAsync("You can use any dice imaginable, even a d1000. Use the format !roll <dice type> <optional modifier> <optional advantage disadvantage>. This looks like !roll 1d20 +6 advantage");
             }
@@ -170,7 +170,7 @@ namespace DnD_Discord_Bot.Modules
                     }
                 }
             }
-            
+
         }
         [Command("spell")]
         public async Task SpellLookup([Remainder] string spell = null)
@@ -987,14 +987,14 @@ namespace DnD_Discord_Bot.Modules
             {
                 conditionLookup = $"{_dnd5eURL}/api/conditions";
                 conditionLookup = await _dndClient.GetStringAsync(conditionLookup.ToLower());
-                if(conditionLookup.ToLower().Contains(condition.ToLower()))
+                if (conditionLookup.ToLower().Contains(condition.ToLower()))
                 {
                     conditionLookup = $"{_dnd5eURL}/api/conditions/{condition}".ToLower();
                     conditionLookup = await _dndClient.GetStringAsync(conditionLookup);
                     ConditionRoot conditionObject = JsonConvert.DeserializeObject<ConditionRoot>(conditionLookup);
 
                     string conditionHeader = $"Condition: {conditionObject.name}\n";
-                    foreach(string desc in conditionObject.desc)
+                    foreach (string desc in conditionObject.desc)
                     {
                         conditionHeader += $"{desc}\n";
                     }
@@ -1010,7 +1010,7 @@ namespace DnD_Discord_Bot.Modules
         [Command("damage")]
         public async Task DamageLookup([Remainder] string damage = null)
         {
-            if(damage == null)
+            if (damage == null)
             {
                 await ReplyAsync($"You can reference any dmaage type in the DnD 5e SRD. Use the format !damage <damage type name>");
             }
@@ -1025,7 +1025,7 @@ namespace DnD_Discord_Bot.Modules
                     DamageTypeRoot damageType = JsonConvert.DeserializeObject<DamageTypeRoot>(damageLookup);
 
                     string damageHeader = $"Damage Type: {damageType.name}\n";
-                    foreach(string desc in damageType.desc)
+                    foreach (string desc in damageType.desc)
                     {
                         damageHeader += $"{desc}\n";
                     }
@@ -1040,10 +1040,10 @@ namespace DnD_Discord_Bot.Modules
             }
         }
         [Command("equipment")]
-        public async Task EquipmentLookup([Remainder]string equipment = null)
+        public async Task EquipmentLookup([Remainder] string equipment = null)
         {
             string equipmentLookup = null;
-            if(equipment == null)
+            if (equipment == null)
             {
                 await ReplyAsync("You can reference any item of equipment in the DnD 5e SRD. Use the format !equipment <equipment name>");
             }
@@ -1054,7 +1054,7 @@ namespace DnD_Discord_Bot.Modules
                 Console.WriteLine(equipment);
                 equipmentLookup = $"{_dnd5eURL}/api/equipment";
                 equipmentLookup = await _dndClient.GetStringAsync(equipmentLookup.ToLower());
-                if(equipmentLookup.Contains(equipment.ToLower()))
+                if (equipmentLookup.Contains(equipment.ToLower()))
                 {
                     equipmentLookup = $"{_dnd5eURL}/api/equipment/{equipment}";
                     Console.WriteLine(equipmentLookup);
@@ -1062,11 +1062,11 @@ namespace DnD_Discord_Bot.Modules
                     EquipmentRoot equipmentObject = JsonConvert.DeserializeObject<EquipmentRoot>(equipmentLookup);
 
                     string equipmentHeader = $"Name: {equipmentObject.name}\nEquipment Category: {equipmentObject.equipmentCategory.name}\nGear Type: {equipmentObject.gearCategory.name}\nCost: {equipmentObject.cost.quantity} {equipmentObject.cost.unit}\nWeight: {equipmentObject.weight} lb\n";
-                    if(equipmentObject.desc != null)
+                    if (equipmentObject.desc != null)
                     {
-                        foreach(string desc in equipmentObject.desc)
+                        foreach (string desc in equipmentObject.desc)
                         {
-                            equipmentHeader += desc +" ";
+                            equipmentHeader += desc + " ";
                         }
                     }
                     await ReplyAsync(equipmentHeader);
@@ -1080,7 +1080,7 @@ namespace DnD_Discord_Bot.Modules
         [Command("feature")]
         public async Task FeatureLookup([Remainder] string feature = null)
         {
-            if(feature == null)
+            if (feature == null)
             {
                 await ReplyAsync("You can look up any feature in the DnD 5e SRD. Use the format !feature <feature name>");
             }
@@ -1090,16 +1090,16 @@ namespace DnD_Discord_Bot.Modules
                 feature = feature.Replace("'", "");
                 string featureLookup = $"{_dnd5eURL}/api/features".ToLower();
                 featureLookup = await _dndClient.GetStringAsync(featureLookup);
-                if(featureLookup.Contains(feature))
+                if (featureLookup.Contains(feature))
                 {
                     featureLookup = $"{_dnd5eURL}/api/features/{feature}".ToLower();
                     featureLookup = await _dndClient.GetStringAsync(featureLookup);
                     FeatureRoot featureObject = JsonConvert.DeserializeObject<FeatureRoot>(featureLookup);
 
                     string featureHeader = $"Feature: {featureObject.name}\nClass: {featureObject.featureClass.name}\nFeature available at level {featureObject.level}\n";
-                    if(featureObject.desc != null)
+                    if (featureObject.desc != null)
                     {
-                        foreach(string desc in featureObject.desc)
+                        foreach (string desc in featureObject.desc)
                         {
                             featureHeader += desc + " ";
                         }
@@ -1117,7 +1117,7 @@ namespace DnD_Discord_Bot.Modules
         [Command("school")]
         public async Task MagicSchoolLookup([Remainder] string magicSchool = null)
         {
-            if(magicSchool == null)
+            if (magicSchool == null)
             {
                 await ReplyAsync("You can reference any school of magic listed in the DnD 5e SRD. Use the format !school <school name>");
             }
@@ -1128,7 +1128,7 @@ namespace DnD_Discord_Bot.Modules
                 string magicSchoolLookup = $"{_dnd5eURL}/api/magic-schools";
                 magicSchoolLookup = await _dndClient.GetStringAsync(magicSchoolLookup);
 
-                if(magicSchoolLookup.Contains(magicSchool))
+                if (magicSchoolLookup.Contains(magicSchool))
                 {
                     magicSchoolLookup = $"{_dnd5eURL}/api/magic-schools/{magicSchool}".ToLower();
                     magicSchoolLookup = await _dndClient.GetStringAsync(magicSchoolLookup);
@@ -1147,7 +1147,7 @@ namespace DnD_Discord_Bot.Modules
         [Command("monster")]
         public async Task MonsterLookup([Remainder] string monster = null)
         {
-            if(monster == null)
+            if (monster == null)
             {
                 await ReplyAsync("You can reference any Monster in the DnD 5e SRD. Use the format !monster <monster name>");
             }
@@ -1159,7 +1159,7 @@ namespace DnD_Discord_Bot.Modules
                 string monsterLookup = $"{_dnd5eURL}/api/monsters";
                 monsterLookup = await _dndClient.GetStringAsync(monsterLookup);
 
-                if(monsterLookup.Contains(monster.ToLower()))
+                if (monsterLookup.Contains(monster.ToLower()))
                 {
                     monsterLookup = $"{_dnd5eURL}/api/monsters/{monster}".ToLower();
                     monsterLookup = await _dndClient.GetStringAsync(monsterLookup);
@@ -1173,11 +1173,11 @@ namespace DnD_Discord_Bot.Modules
                     string chaMod = botUtilities.CalculateModifiers(monsterObject.charisma);
                     string monsterHeader = $"Name: {monsterObject.name}\n{monsterObject.size} {monsterObject.type}, {monsterObject.alignment}\n";
                     monsterHeader += $"Armor Class: {monsterObject.armorClass}\nHit Points: {monsterObject.hitPoints} ({monsterObject.hitDice})\nSpeed: Walk {monsterObject.speed.walk} ";
-                    if(monsterObject.speed.swim != null)
+                    if (monsterObject.speed.swim != null)
                     {
                         monsterHeader += $"Swim {monsterObject.speed.swim} ";
                     }
-                    if(monsterObject.speed.fly != null)
+                    if (monsterObject.speed.fly != null)
                     {
                         monsterHeader += $"Fly {monsterObject.speed.fly} ";
                     }
@@ -1185,11 +1185,11 @@ namespace DnD_Discord_Bot.Modules
                     bool skill = false;
                     bool savingThrow = false;
                     string proficiency = null;
-                    for(int i = 0; i < monsterObject.proficiencies.Count; i++)
+                    for (int i = 0; i < monsterObject.proficiencies.Count; i++)
                     {
-                        if(monsterObject.proficiencies[i].proficiency.index.Contains("saving"))
+                        if (monsterObject.proficiencies[i].proficiency.index.Contains("saving"))
                         {
-                            if(!savingThrow)
+                            if (!savingThrow)
                             {
                                 savingThrow = true;
                                 monsterHeader += $"Saving Throw: ";
@@ -1202,9 +1202,9 @@ namespace DnD_Discord_Bot.Modules
                                 monsterHeader += $"{proficiency} ";
                             }
                         }
-                        else if(monsterObject.proficiencies[i].proficiency.index.Contains("skill"))
+                        else if (monsterObject.proficiencies[i].proficiency.index.Contains("skill"))
                         {
-                            if(!skill)
+                            if (!skill)
                             {
                                 skill = true;
                                 monsterHeader += $"\nSkill: ";
@@ -1219,57 +1219,57 @@ namespace DnD_Discord_Bot.Modules
                         }
                     }
                     //TODO ADD Vulnerabilities, Resistances, Immunities
-                    if(monsterObject.damageVulnerabilities != null)
+                    if (monsterObject.damageVulnerabilities != null)
                     {
                         monsterHeader += $"Damage Vulnerabilities: ";
-                        foreach(string vulnerability in monsterObject.damageVulnerabilities)
+                        foreach (string vulnerability in monsterObject.damageVulnerabilities)
                         {
                             monsterHeader += $"{vulnerability} ";
                         }
                         monsterHeader += "\n";
                     }
-                    if(monsterObject.damageResistances != null)
+                    if (monsterObject.damageResistances != null)
                     {
                         monsterHeader += $"Damage Resistances: ";
-                        foreach(string resistance in monsterObject.damageResistances)
+                        foreach (string resistance in monsterObject.damageResistances)
                         {
                             monsterHeader += $"{resistance} ";
                         }
                         monsterHeader += "\n";
                     }
-                    if(monsterObject.damageImmunities != null)
+                    if (monsterObject.damageImmunities != null)
                     {
                         monsterHeader += $"Damage Immunities: ";
-                        foreach(string immunity in monsterObject.damageImmunities)
+                        foreach (string immunity in monsterObject.damageImmunities)
                         {
                             monsterHeader += $"{immunity} ";
                         }
                         monsterHeader += "\n";
                     }
-                    if(monsterObject.conditionImmunities != null)
+                    if (monsterObject.conditionImmunities != null)
                     {
                         monsterHeader += $"Condition Immunities: ";
-                        foreach(MonsterConditionImmunities immunity in monsterObject.conditionImmunities)
+                        foreach (MonsterConditionImmunities immunity in monsterObject.conditionImmunities)
                         {
                             monsterHeader += $"{immunity.name} ";
                         }
                         monsterHeader += "\n";
                     }
 
-                    if(monsterObject.senses != null)
+                    if (monsterObject.senses != null)
                     {
                         monsterHeader += $"\nSenses: ";
-                        if(monsterObject.senses.darkvision != null)
+                        if (monsterObject.senses.darkvision != null)
                         {
                             monsterHeader += $"Dark Vision ({monsterObject.senses.darkvision}) ";
                         }
-                        if(monsterObject.senses.passivePerception != null)
+                        if (monsterObject.senses.passivePerception != null)
                         {
                             monsterHeader += $"Passive Perception ({monsterObject.senses.passivePerception}) ";
                         }
                         monsterHeader += $"\n";
                     }
-                    if(monsterObject.languages != null)
+                    if (monsterObject.languages != null)
                     {
                         monsterHeader += $"Languages: {monsterObject.languages}\n";
                     }
@@ -1277,47 +1277,47 @@ namespace DnD_Discord_Bot.Modules
                     monsterHeader += $"Challenge Rating {monsterObject.challengeRating} ({crXP} XP)\n";
 
                     string monsterSpecialAbilities = null;
-                    if(monsterObject.specialAbilities != null)
+                    if (monsterObject.specialAbilities != null)
                     {
                         monsterSpecialAbilities = "Special Abilities\n";
-                        foreach(MonsterSpecialAbility ability in monsterObject.specialAbilities)
+                        foreach (MonsterSpecialAbility ability in monsterObject.specialAbilities)
                         {
                             monsterSpecialAbilities += $"Name: {ability.name}\n{ability.desc}\n";
                         }
                     }
                     string monsterActions = null;
-                    if(monsterObject.actions != null)
+                    if (monsterObject.actions != null)
                     {
                         monsterActions = "Actions\n";
-                        foreach(MonsterAction action in monsterObject.actions)
+                        foreach (MonsterAction action in monsterObject.actions)
                         {
                             monsterActions += $"Name: {action.name}\n{action.desc}\n";
-                            if(action.usage != null)
+                            if (action.usage != null)
                             {
                                 monsterActions += $"Uses: {action.usage.times} {action.usage.type}\n";
                             }
                         }
                     }
                     string monsterLegendaryActions = null;
-                    if(monsterObject.legendaryActions != null)
+                    if (monsterObject.legendaryActions != null)
                     {
                         monsterLegendaryActions = "Legendary Actions\n";
-                        foreach(MonsterLegendaryAction legendaryAction in monsterObject.legendaryActions)
+                        foreach (MonsterLegendaryAction legendaryAction in monsterObject.legendaryActions)
                         {
                             monsterLegendaryActions += $"Name: {legendaryAction.name}\n{legendaryAction.desc}\n";
                         }
                     }
 
                     await ReplyAsync(monsterHeader);
-                    if(monsterSpecialAbilities != null)
+                    if (monsterSpecialAbilities != null)
                     {
                         await ReplyAsync(monsterSpecialAbilities);
                     }
-                    if(monsterActions != null)
+                    if (monsterActions != null)
                     {
                         await ReplyAsync(monsterActions);
                     }
-                    if(monsterLegendaryActions != null)
+                    if (monsterLegendaryActions != null)
                     {
                         await ReplyAsync(monsterLegendaryActions);
                     }
@@ -1331,12 +1331,89 @@ namespace DnD_Discord_Bot.Modules
         [Command("race")]
         public async Task RaceLookup([Remainder] string race = null)
         {
+            if (race != null)
+            {
+                string raceLookup = $"{_dnd5eURL}/api/races";
+                raceLookup = await _dndClient.GetStringAsync(raceLookup);
+                race = race.Replace(" ", "-");
+                race = race.Replace("'", "");
+                if (raceLookup.Contains(race.ToLower()))
+                {
+                    raceLookup = $"{_dnd5eURL}/api/races/{race}";
+                    raceLookup = await _dndClient.GetStringAsync(raceLookup);
+                    RaceRoot raceObject = JsonConvert.DeserializeObject<RaceRoot>(raceLookup);
 
+                    string raceHeader = $"Name: {raceObject.name}\nSpeed: {raceObject.speed} ft\nAbility Bonuses: ";
+                    foreach (RaceAbilityBonus abilityBonus in raceObject.abilityBonuses)
+                    {
+                        raceHeader += $"{abilityBonus.name} +{abilityBonus.bonus} ";
+                    }
+                    raceHeader += $"\nAlignment: {raceObject.alignment}\nAge: {raceObject.age}\nSize: {raceObject.size}\n{raceObject.sizeDescription}\n";
+                    string raceStartingProficiencies = null;
+                    if (raceObject.startingProficiencies != null)
+                    {
+                        raceStartingProficiencies = $"Starting Proficiencies: ";
+                        foreach (RaceStartingProficiencies startingProficiency in raceObject.startingProficiencies)
+                        {
+                            raceStartingProficiencies += $"{startingProficiency.name} ";
+                        }
+                    }
+                    string raceLanguages = $"Language: {raceObject.languageDesc}\n";
+                    string raceTraits = $"Traits: ";
+                    foreach (RaceTraits trait in raceObject.traits)
+                    {
+                        raceTraits += $"{trait.name} ";
+                    }
+                    string raceSubrace = null;
+                    if (raceObject.subraces != null)
+                    {
+                        raceSubrace = $"\nSubraces: ";
+                        foreach (RaceSubraces subrace in raceObject.subraces)
+                        {
+                            raceSubrace += $"{subrace.name} ";
+                        }
+                    }
+
+                    await ReplyAsync(raceHeader);
+                    if (raceStartingProficiencies != null)
+                    {
+                        await ReplyAsync(raceStartingProficiencies);
+                    }
+                    await ReplyAsync(raceLanguages);
+                    await ReplyAsync(raceTraits);
+                    if (raceSubrace != null)
+                    {
+                        await ReplyAsync(raceSubrace);
+                    }
+                }
+                else
+                {
+                    await ReplyAsync($"{race} is not found in the DnD 5e SRD");
+                }
+            }
+            else
+            {
+                await ReplyAsync("You can reference any Race in the DnD 5e SRD. Use the format !race <race name>");
+            }
         }
         [Command("subclass")]
-        public async Task SubclassLookup([Remainder] string subclass = null)
+        public async Task SubclassLookup(string subclass = null, string option = null, [Remainder] string optionModifier = null)
         {
+            if(subclass != null)
+            {
+                if(option != null)
+                {
 
+                }
+                else
+                {
+
+                }
+            }
+            else
+            {
+                await ReplyAsync("You can reference any Subclass in the DnD 5e SRD. Use the format !subclass <subclass name>, or for subclass levels use !subclass <subclass name> level <level number>");
+            }
         }
         [Command("trait")]
         public async Task TraitLookup([Remainder] string trait = null)
@@ -1345,6 +1422,11 @@ namespace DnD_Discord_Bot.Modules
         }
         [Command("property")]
         public async Task PropertyLookup([Remainder] string weaponProperty = null)
+        {
+
+        }
+        [Command("subrace")]
+        public async Task SubraceLookup([Remainder] string subrace = null)
         {
 
         }
